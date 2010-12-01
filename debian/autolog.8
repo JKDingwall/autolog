@@ -1,0 +1,93 @@
+.TH AUTOLOG 8 "Administrative Utilities" "Linux" \" -*- nroff -*-
+.SH NAME
+autolog \- Log out idle users
+.SH SYNOPSIS
+\fBautolog\fP [ \fBoptions\fP ]
+.br
+.SH DESCRIPTION
+The program reads the utmp file, entry by entry.  The 
+username for each 'user process' is compared to the entries in the 
+configuration file (see
+.B autolog.conf(5)
+).  The first entry to match both the name, the group,
+and the tty line of the process will be used to conduct the automatic 
+logout.
+
+.SH CALL
+.TP
+.B /etc/init.d/autolog start
+.PD 0
+.TP
+or
+.TP
+.B autolog
+to run this program in daemon-mode
+.PD
+.TP
+.B autolog -o
+to run this program as "ordinary" program.
+Keep in mind: Also when running as ordinary program,
+it will stay in memory until all its jobs are done.
+
+.SH OPTIONS
+.TP
+.B -a
+(all processes) Print information on ALL utmp entries--not just user processes.
+.TP
+.B -d
+(debug mode) This is helpful in setting up your configuration file.
+The program runs in foreground rather than forking and it prints 
+out verbose messages about what it is doing.
+.TP
+.B -n
+(nokill) Use this to prevent autolog from actually "killing"
+anyone. Use \-d and \-n together when setting up a new
+configuration file.
+( This will not affect killing of lost processes. )
+.TP
+.B -o
+(ordinary) Use this to run this program as ordinary
+program, not as daemon. Program will end, when its
+job is done. In this case, some data is kept in
+"/var/lib/autolog/autolog.data". This is read, when the program
+is called again.
+.TP
+.B -f config_file_name
+Use this to override the default: "/etc/autolog.conf"
+.TP
+.B -l  log_file_name
+Use this to override the default: "/var/log/autolog.log".
+Note that if this file doesn't exist, no logging will happen.
+Create the file (with touch) to enable logging.
+.TP
+.B -t  idle_time
+Use this to override the internal default idle time (minutes)
+.TP
+.B -g  grace_period
+Use this to override the internal default grace period (seconds)
+.TP
+.B -m  yes/no
+Use this to override the internal mailing switch.  If "yes"
+the program will send mail to the users right after killing them.
+.TP
+.B -c  yes/no
+Use this to override the internal "pre-clear" switch.  If "yes"
+the program will clear the terminal screen before warning the user.
+.TP
+.B -w  yes/no
+Do timeouts based on total session time--not idle time. (hard)
+.TP
+.B -l  yes/no
+If set to "yes" activities will be written to the logfile if 
+present.
+
+.SH AUTHOR
+Kyle Bateman <kyle@actarg.com> (autolog 0.35),
+.PD 0
+.TP
+Carsten Juerges <juerges@cip-bau.uni-hannover.de>
+.TP
+                                  (autolog 0.40)
+.PD
+.PP
+This manual page was modified for \fBDebian\fP by Paul Telford <pxt@debian.org>

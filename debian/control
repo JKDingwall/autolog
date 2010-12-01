@@ -1,0 +1,15 @@
+Source: autolog
+Build-Depends: debhelper (>= 5)
+Section: admin
+Priority: extra
+Maintainer: Luis Uribe <acme@eviled.org>
+Standards-Version: 3.9.1
+Homepage: http://gitorious.org/debian-packages/autolog
+
+Package: autolog
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, cron (>= 3.0pl1-42)
+Recommends: exim4|mail-transport-agent
+Description: Terminates connections for idle users
+ Autolog terminates connections considered to be idle based on a large
+ variety of parameters.

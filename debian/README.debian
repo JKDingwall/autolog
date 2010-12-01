@@ -1,0 +1,13 @@
+
+Note that if using the '-o' flag, the data will be saved in /var/lib/autolog
+(to comply with FHS) -- I modified the man page to note this, but left the 
+original README file alone.
+
+The autolog daemon will be activated after you install or upgrade it and will 
+log users out after two hours of idle time. If you do not want this then 
+either customize /etc/autolog.conf and /etc/rc.d/autolog according to your
+needs or uninstall autolog.
+
+If you are installing or upgrading remotely, then this might disconnect
+you when you leave things unattended.
+

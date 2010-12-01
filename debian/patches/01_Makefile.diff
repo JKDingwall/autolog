@@ -1,0 +1,39 @@
+From: Luis Uribe <acme@eviled.org>
+Subject: Add proper routes to Makefile
+Index: autolog/Makefile
+===================================================================
+--- autolog.orig/Makefile	2010-04-14 22:00:44.000000000 -0500
++++ autolog/Makefile	2010-04-19 09:48:46.000000000 -0500
+@@ -3,23 +3,22 @@
+ # The -g flag is to include debugging information.  It gets
+ # stripped back out in the install command anyway.
+ CC	= gcc
+-CFLAGS	= -g
+-MANDIR  = /usr/man
+-BINDIR  = /usr/sbin/
+-LOGDIR  = /var/log/
+-INIDIR  = /sbin/init.d/
++CFLAGS += -g
++MANDIR  = $(DESTDIR)/usr/share/man
++BINDIR  = $(DESTDIR)/usr/sbin/
++STATEDIR = $(DESTDIR)/var/lib/autolog/
++CONFDIR = $(DESTDIR)/etc/
++INIDIR  = $(DESTDIR)/etc/init.d/
+ # *********************************************************
+ 
+ autolog:	autolog.c
+ 	$(CC) $(CFLAGS) -o autolog autolog.c
+ 
+ install:	autolog
++	install -d $(BINDIR) $(INIDIR) $(CONFDIR) $(STATEDIR) $(LOGDIR) $(MANDIR)
+ 	install -m744 -o 0 -g 0 autolog           $(BINDIR)
+ 	install -m744 -o 0 -g 0 autolog.init      $(INIDIR)/autolog
+-	install -m644 -o 0 -g 0 autolog.conf	  /etc
+-	install -m644 -o 0 -g 0 autolog.log       $(LOGDIR)
+-	install -m644          	autolog.conf.5.gz $(MANDIR)/man5
+-	install -m644		autolog.8.gz      $(MANDIR)/man8
++	install -m644 -o 0 -g 0 autolog.conf      $(CONFDIR)
+ 
+ clean:
+-	rm autolog
++	rm -f autolog

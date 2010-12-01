@@ -1,0 +1,88 @@
+From: Luis Uribe <acme@eviled.org>
+Subject: Make the autolog.init script LSB-compliant
+Index: autolog/autolog.init
+===================================================================
+--- autolog.orig/autolog.init	2010-03-25 20:01:19.000000000 -0500
++++ autolog/autolog.init	2010-04-02 10:04:44.000000000 -0500
+@@ -1,44 +1,57 @@
+ #! /bin/sh
+-# Copyright (c) 2000 Carsten Juerges, Hannover, Germany.  All rights reserved.
+ #
+-# Author: Carsten Juerges <juerges@cip-bau.uni-hannover.de>, 2000
++# autolog: Terminates connections for idle users
+ #
+-# /sbin/init.d/autolog
++### BEGIN INIT INFO
++# Provides:          autolog
++# Required-Start:    $remote_fs
++# Required-Stop:     $remote_fs
++# Default-Start:     2 3 4 5
++# Default-Stop:      0 1 6
++# Short-Description: Start the autolog daemon firewall at boot time
++# Description:       Script to start/stop/reload the autolog daemon
++### END INIT INFO
+ #
++# Copyright (c) 2000 Carsten Juerges, Hannover, Germany.  All rights reserved.
++# Author: Carsten Juerges <juerges@cip-bau.uni-hannover.de>, 2000
++# Debian-ized by Paul Telford <paul@droflet.net> 01/30/2003
++# Make LSB-compliant on 01/06/2007 by Luis Uribe <acme@eviled.org> 
+ 
+-. /etc/rc.config
+-
+-base=${0##*/}
+-link=${base#*[SK][0-9][0-9]}
+-
+-test $link = $base && START_AUTOLOG=yes
+-test "$START_AUTOLOG" = yes || exit 0
++PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
++DAEMON=/usr/sbin/autolog
++NAME=autolog
++DESC="terminates connections for idle users"
++SCRIPTNAME=/etc/init.d/$NAME
++
++# Load the VERBOSE setting and other rcS variables
++. /lib/init/vars.sh
++
++# Define LSB log_* functions.
++# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
++. /lib/lsb/init-functions
+ 
+-export PATH=/bin:/usr/bin:/sbin:/usr/sbin
+-export HOME=/
++test -x /usr/sbin/autolog || exit 0
+ 
+-return=$rc_done
+ case "$1" in
+     start)
+ 	echo -n "Starting autolog daemon"
+-	startproc /usr/sbin/autolog || return=$rc_failed
+-	echo -e "$return"
++	start-stop-daemon --start --quiet --exec $DAEMON
++	echo "."
+ 	;;
+     stop)
+ 	echo -n "Shutting down autolog daemon"
+-	killproc -TERM /usr/sbin/autolog || return=$rc_failed
+-	echo -e "$return"
+-	;;
+-    restart)
+-	$0 stop && $0 start || return=$rc_failed
++	start-stop-daemon --stop --quiet --exec $DAEMON
++	echo "."
+ 	;;
+-    status)
+-	checkproc /usr/sbin/autolog && echo "autolog up" || echo "No autolog"
++    force-reload|restart)
++	echo -n "Restarting autolog daemon"
++	start-stop-daemon --stop --quiet --exec $DAEMON
++	start-stop-daemon --start --quiet --exec $DAEMON
++	echo "."
+ 	;;
+     *)
+-	echo "Usage: $0 {start|stop|status|restart}"
++	echo "Usage: $0 {start|stop|restart|force-reload}"
+ 	exit 1
+ esac
+ 
+-test "$return" = "$rc_done" || exit 1
+ exit 0

@@ -1,0 +1,324 @@
+autolog (0.40-13.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Don't set PATH in postrm (there is no need for that), (Closes: #604208).
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Wed, 01 Dec 2010 16:40:43 +0100
+
+autolog (0.40-13) unstable; urgency=low
+
+  * debian/patches
+    - Adding 04_check_ps_output.diff, thanks to Julien Viard de Galbert
+      <julien@vdg.blogsite.org>. (Closes: #553502)
+  * debian/control
+    - Bump Standards-Version: 3.9.1 (No changes)
+  * debian/autolog.conf.5
+    - Fix spelling-error-in-manpage. Makes lintian happy.
+  * debian/patches/01_Makefile.diff
+    - Change the INIDIR to /etc/init.d
+ 
+ -- Luis Uribe <acme@eviled.org>  Sat, 30 Oct 2010 21:19:38 -0500
+
+autolog (0.40-12) unstable; urgency=low
+
+  * debian/compat
+    - Dump debhelper to 5
+  * debian/control
+    - Bump Standards-Version: 3.8.4 (No changes)
+  * debian/[postinst,postrm,preinst,prerm]
+    - Add 'set -e' to check for errors
+  * Add patches for:
+    - Makefile
+    - autolog.8
+    - autolog.conf.5
+    - autolog.c
+    - autolog.init
+  * debian/control
+    - Adds ${misc:Depends} to Depends:
+    - Bump debhelper dependent number version. Makes lintian happy.
+    - Add homepage field
+  * debian/copyright
+    - Fix the symlink to GPL-2
+  * Makefile
+    - Remove installation of autolog.log from Makefile and include it on a
+      postinst script
+    - Fix the path of the manpage installation
+  * Switch to dpkg-source 3.0 (quilt) format. (Closes: #538629)
+  * debian/source.lintian-overrides
+    - Add file to override lintian warnings
+  * debian/rules
+    - Remove quilt references
+    - Clean "clean" target.
+
+ -- Luis Uribe <acme@eviled.org>  Sun, 21 Mar 2010 21:58:13 -0500
+
+autolog (0.40-11) unstable; urgency=low
+
+  * debian/control
+    - Bump standards to 3.8.0 (No changes made)
+  * debian/copyright
+    - Rewrite Copyright notice
+  * Remove the bashism in autolog.init (Closes: #471289)
+  * Remove the bashism in debian/preinst
+  * debian/rules
+    - Move dh_shlibdeps after dh_makeshlibs and before dh_gencontrol,
+      makes lintian happy.
+    - Remove template lines.
+    - Manage patches with quilt.
+  * autolog.8 and autolog.conf.5
+    - Fix lintian reports (hyphen used as a minus sign).
+
+ -- Luis Uribe <acme@eviled.org>  Wed, 09 Apr 2008 20:30:13 -0500
+
+autolog (0.40-10) unstable; urgency=low
+
+  * New maintainter. (Closes: #385360).
+  * Updated to newest standards version.
+  * Added patch from Martin Godisch <martin@godisch.de> to correct the
+    misbehave of the program when there is a small idle time specified
+    (Closes: #206729).
+  * debian/control
+    - Remove debconf from Depends:
+  * debian/rules
+    - Remove debian/substvars file.
+  * debian/watch
+    - Added file
+  * autolog.init
+    - Make the script LSB-Compliant.
+  * Move the debconf note to the README.Debian file, also remove
+    debian/config, debian/templates and debian/po. (Closes: #388826).
+
+ -- Luis Uribe <acme@eviled.org>  Mon, 4 Jun 2007 16:42:40 -0500
+
+autolog (0.40-9) unstable; urgency=low
+
+  * Added debconf-2.0 depends, per Joey Hess
+  * Updated Portugese, Swedish translations (Closes: #330204, #330264)
+
+ -- Paul Telford <pxt@debian.org>  Fri, 30 Sep 2005 07:49:28 -0700
+
+autolog (0.40-8) unstable; urgency=low
+
+  * Updated to newest standards-version
+  * Added man page back in to package
+
+ -- Paul Telford <pxt@debian.org>  Mon, 18 Jul 2005 09:50:13 -0700
+
+autolog (0.40-7) unstable; urgency=low
+
+  * Update German, Vietnamese, Japanese, Czech debconf translations
+      (Closes: #276695, #309466, #227806, #293603)
+  * Remove debhelper dependency (Closes: #276909)
+
+ -- Paul Telford <pxt@debian.org>  Mon, 18 Jul 2005 08:24:32 -0700
+
+autolog (0.40-6) unstable; urgency=low
+
+  * Updated Russian and Dutch debconf translation (Closes: #219264, #215365)
+
+ -- Paul Telford <pxt@debian.org>  Mon,  8 Dec 2003 15:21:53 -0800
+
+autolog (0.40-5) unstable; urgency=low
+
+  * Un-commented two erroneously exlcuded upstream source lines
+      (Closes: #206742)
+  * Updated French and Brazilian Portugese debconf translations
+      (Closes: #207948, #207836, #206965)
+
+ -- Paul Telford <pxt@debian.org>  Mon,  1 Sep 2003 18:39:48 -0700
+
+autolog (0.40-4) unstable; urgency=low
+
+  * Switched to gettext-based debconf templates (Closes: #205771)
+  * Added French translation of gettext debconf template (Closes: #206598)
+
+ -- Paul Telford <pxt@debian.org>  Thu, 21 Aug 2003 11:48:41 -0700
+
+autolog (0.40-3) unstable; urgency=low
+
+  * Use an alternate regex comparison routine to avoid a memory
+    leak.  (Closes: #188445)
+  * Fixed typo in warning message (Closes: #192018)
+
+ -- Paul Telford <pxt@debian.org>  Fri, 18 Jul 2003 22:28:57 -0700
+
+autolog (0.40-2) unstable; urgency=low
+
+  * Remove old cron.d entry from prior versions if it exists (Closes: #182043)
+
+ -- Paul Telford <paul@droflet.net>  Sat, 22 Feb 2003 09:53:21 -0800
+
+autolog (0.40-1) unstable; urgency=low
+
+  * New upstream release (Closes: #160003, #132152, #73051, #153575, #86423)
+  * New maintainer (Closes: #174336)
+  * Added fix to catch unknown groups (Closes: #52124)
+  * Added Russian debconf template (Closes: #136922)
+  * Fixed various upstream bugs
+
+ -- Paul Telford <paul@droflet.net>  Tue, 04 Feb 2003 08:25:28 -0800
+
+autolog (0.35-10.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Mark /etc/logrotate.d/autolog as a conffile (closes: #132152).
+
+ -- Colin Watson <cjwatson@debian.org>  Sun, 10 Feb 2002 17:32:59 +0000
+
+autolog (0.35-10) unstable; urgency=low
+
+  * Sorted out build-depends (closes:Bug#103841,Bug#105083).
+  * Enhanced some error messages.
+  * Included host in the subject and the body of the generated messages
+    (closes:Bug#94910).
+  * Included debconf message translation to Brazilian Portuguese contributed
+    by andrelop@ig.com.br (closes:Bug#107486).
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun, 21 Oct 2001 18:52:29 -0300
+
+autolog (0.35-9.1) unstable; urgency=low
+
+  * NMU
+  * Combine multiple build-depends lines
+
+ -- Progeny Development Team <progeny-devel@progeny.com>  Sun, 15 Jul 2001 12:24:31 -0500
+
+autolog (0.35-9) unstable; urgency=low
+
+  * Use select(2) to check if we can write to the tty without blocking. I
+    hope this finally fixes autolog creating countless processes.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun,  1 Apr 2001 03:33:01 -0300
+
+autolog (0.35-8) unstable; urgency=low
+
+  * Ship with a debian/templates file and don't try to tun
+    debconf-mergetemplates if it doesn't exist. This is to enable people
+    to build this package in potato (Debian 2.1) (closes:Bug#86423).
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun, 18 Feb 2001 00:58:41 -0300
+
+autolog (0.35-7) unstable; urgency=low
+
+  * Added Swedish, German and Dutch translations
+    (closes:Bug#82941,Bug#83546,Bug#83902).
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sat, 17 Feb 2001 13:09:51 -0300
+
+autolog (0.35-6) unstable; urgency=low
+
+  * Open tty with open(2) in non-blocking mode. It should fix some hangs.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Wed, 11 Oct 2000 19:20:52 -0300
+
+autolog (0.35-5) unstable; urgency=low
+
+  * Added Build-Depends header (closes:Bug#70163).
+  * Uses getopt. Exits if given an illegal option.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Mon, 28 Aug 2000 00:21:59 -0300
+
+autolog (0.35-4) unstable; urgency=low
+
+  * If the we get ENOENT opening the tty, we skip it
+    (closes:Bug#66416).
+  * Added dh_clean to debian/rules.
+  * Use debconf to show the note to the user.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Fri, 28 Jul 2000 22:12:57 -0300
+
+autolog (0.35-3) unstable; urgency=low
+
+  * Moved docs and manpages under /usr/share.
+  * Updated `Standards-Version' to 3.0.1.
+  * Uses logrotate to handle the logfile rotation.
+  * Remove logfiles when the package is purgued.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun, 12 Sep 1999 17:44:00 -0300
+
+autolog (0.35-2) unstable; urgency=low
+
+  * Really updated maintainer address.
+  * Commented out sample lines in default autolog.conf.
+  * Minor fixes to manpage.
+  * Removed useless README.debian.
+  * Changed Standards-Version to 2.5.0.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun,  4 Jul 1999 02:40:08 -0300
+
+autolog (0.35-1) unstable; urgency=low
+
+  * New upstream release (only change: default log filename).
+  * Updated maintainer address.
+  * Removed bashism from debian/rules (closes: Bug#22527).
+  * Uses pristine sources.
+  * Added line-feed before logout message.
+  * It were closing popened files with fclose, now fixed.
+  * Removed all compilation warnings.
+  * Improved message sent to the user, indicating who logged him out
+    (closes: Bug#20326).
+  * Switched to debhelper.
+  * Removed changelog from README and install it as upstream changelog.
+  * Changed default idle time from 1 to 2 hours. Updated postinst message.
+
+ -- Nicolás Lichtmaier <nick@debian.org>  Sun, 27 Jun 1999 01:02:39 -0300
+
+autolog (0.34-5) unstable; urgency=low
+
+  * Updated FSF address.
+  * Added dependancy on cron.
+  * Preserve files' dates.
+  * Added code to remove the old entry from /etc/crontab.
+  * No longer edits /etc/crontab on postinst, now it adds a conffile in
+    /etc/cron.d, as current policy mandates.
+  * Fixes to the manpages.
+  * Upgraded `Standards-version' to 2.4.0.0.
+  * Fixed md5sums file (#19274).
+
+ -- Nicolás Lichtmaier <nick@feedback.net.ar>  Wed, 11 Mar 1998 23:23:06 -0300
+
+autolog (0.34-4) unstable; urgency=low
+
+  * Changed maintainer address.
+  * Added -Wall to CFLAGS and removed lots of warnings.
+  * Don't try to close logfile if it hasn't been opened, fixes bugs #14156
+    and #15307.
+  * Building with new debmake fixes bug #12832.
+  * Replaced `/bin/mail' with `/usr/sbin/sendmail' and recommend
+    mail-transport-agent, fixes bug #15342.
+
+ -- Nicolás Lichtmaier <nick@feedback.net.ar>  Mon,  1 Dec 1997 22:47:55 -0300
+
+autolog (0.34-3) unstable; urgency=low
+
+  * Added errno message to error messages.
+  * Uses kill to check if process is alive instead of stat in proc.
+  * Built with libc6.
+  * Corrected crontab entry, fixes #8010.
+  * Updated debstd invocation.
+  * New maintainer.
+
+ -- Nicolás Lichtmaier <nick@feedback.com.ar>  Thu, 13 Feb 1997 16:13:42 -0300
+
+autolog (0.34-2) unstable; urgency=low
+
+  * binary was missing and postinst messages fixed
+
+ -- Christoph Lameter <clameter@debian.org>  Sun, 5 Jan 1997 19:47:20 -0800
+
+autolog (0.34-1) unstable; urgency=low
+
+  * Upstream release after sending patches to author. Plus a fix for
+    a problem with X sessions.
+
+ -- Christoph Lameter <clameter@debian.org>  Sat, 7 Dec 1996 14:14:27 -0800
+
+autolog (0.33-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Christoph Lameter <clameter@debian.org>  Sat, 7 Dec 1996 11:16:50 -0800
+
+Local variables:
+mode: debian-changelog
+End:

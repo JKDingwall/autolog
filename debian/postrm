@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+if [ "$1" = "purge" ]; then
+	if find /var/log -maxdepth 1 -name autolog.log -o -name autolog.log.[0-9].gz |
+			grep -q var ; then
+		echo -n Removing logfiles...
+		rm -f /var/log/autolog.log /var/log/autolog.log.[0-9].gz
+		echo done.
+	fi
+	update-rc.d autolog remove >/dev/null
+fi
+

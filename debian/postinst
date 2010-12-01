@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+PATH=/bin:/usr/bin:/usr/sbin:/sbin
+
+if [ -e /usr/share/debconf/confmodule ]; then
+  . /usr/share/debconf/confmodule
+fi
+
+#DEBHELPER#
+
+update-rc.d autolog defaults >/dev/null
+
+if [ -e /usr/share/debconf/confmodule ]; then
+	. /usr/share/debconf/confmodule
+	db_get autolog/note || true
+else
+
+cat << EOF
+
+The autolog daemon will be activated now and will log users out after
+two hours of idle time. If you do not want this then either uninstall
+autolog or customize /etc/autolog.conf and /etc/rc.d/autolog according
+to your needs.
+
+If you are running dselect over a modem line then this might disconnect
+you when you leave things unattended.
+EOF
+
+fi
+
+db_stop
+
+touch /var/log/autolog.log
+chown root:adm /var/log/autolog.log
+chmod 0644 /var/log/autolog.log
+
+if [ -x /usr/sbin/invoke-rc.d ]; then
+    invoke-rc.d autolog restart
+else
+    /etc/init.d/autolog restart
+fi
