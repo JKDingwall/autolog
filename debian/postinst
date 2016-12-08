@@ -34,7 +34,7 @@ touch /var/log/autolog.log
 chown root:adm /var/log/autolog.log
 chmod 0644 /var/log/autolog.log
 
-if [ -x /usr/sbin/invoke-rc.d ]; then
+if [ -x invoke-rc.d ]; then
     invoke-rc.d autolog restart
 else
     /etc/init.d/autolog restart
