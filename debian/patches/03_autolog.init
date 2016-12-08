@@ -80,7 +80,7 @@ Index: autolog/autolog.init
  	;;
      *)
 -	echo "Usage: $0 {start|stop|status|restart}"
-+	echo "Usage: $0 {start|stop|restart|force-reload}"
++	echo "Usage: $0 {start|stop|status|restart|force-reload}"
  	exit 1
  esac
  
