@@ -11,7 +11,7 @@ Vcs-Browser: https://anonscm.debian.org/cgit/pkg-security/autolog.git
 
 Package: autolog
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, cron (>= 3.0pl1-42)
+Depends: ${misc:Depends}, ${shlibs:Depends}, cron (>= 3.0pl1-42),lsb-base (>=3.0-6)
 Recommends: exim4|mail-transport-agent
 Description: Terminates connections for idle users
  Autolog terminates connections considered to be idle based on a large
