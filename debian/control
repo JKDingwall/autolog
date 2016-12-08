@@ -13,6 +13,8 @@ Package: autolog
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, cron (>= 3.0pl1-42),lsb-base (>=3.0-6)
 Recommends: exim4|mail-transport-agent
-Description: Terminates connections for idle users
- Autolog terminates connections considered to be idle based on a large
- variety of parameters.
+Description: Log out idle users
+ The  program reads the utmp file, entry by entry.  The username for each 
+ 'user process' is compared to the entries in the configuration file.
+ The first entry to match both the name, the group, and the tty line 
+ of the process will be used to conduct the automatic logout.
