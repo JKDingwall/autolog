@@ -1,23 +1,36 @@
-This package was debianized by Christoph Lameter
-<clameter@debian.org> on Sat, 7 Dec 1996 11:16:50 -0800.
-<paul@droflet.net>    on Wed Jan  8 14:22:28 PST 2003
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: autolog
+Source: http://www.ibiblio.org/pub/Linux/system/admin/idle/
 
-It was downloaded from http://metalab.unc.edu/pub/Linux/system/admin/idle/
+Files: *
+Copyright:  2000 Carsten Juerges <juerges@cip-bau.uni-hannover.de> 
+            1996,1998 Kyle Bateman <kyle@actarg.com>
+License: GPL-2+
 
-Copyright, Christoph Lameter <clameter@debian.org>
+Files: debian/*
+Copyright:  2016 Marcos Fouces <mfouces@yahoo.es>
+            2007-2010 Luis Uribe <acme@eviled.org>
+            2003-2005 Paul Telford <paul@droflet.net>
+            2002 Colin Watson <cjwatson@debian.org>
+            2001 Progeny Development Team <progeny-devel@progeny.com>
+            1997-2001 Nicolás Lichtmaier <nick@feedback.com.ar>
+            1996 Christoph Lameter <clameter@debian.org>
+License: GPL-2+
 
-License:
-
- Copyright  1996 by Christoph Lameter
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+License: GPL-2+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+ .
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU General Public License for more details.
- 
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ .
  On Debian systems, the complete text of the GNU General Public License
- can be found in `/usr/share/common-licenses/GPL-2'.
+ can be found in /usr/share/common-licenses/GPL-2 file.

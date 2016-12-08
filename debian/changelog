@@ -1,5 +1,6 @@
 autolog (0.40+debian-1) UNRELEASED; urgency=medium
 
+  [ Marcos Fouces ]
   * Rename version to 0.40+debian. Deleted 
   unnecesary files (*.spec and a binary)
   * Assign to pkg-security team
@@ -12,6 +13,9 @@ autolog (0.40+debian-1) UNRELEASED; urgency=medium
   * Fix descriptions in control file
   * Adapt rules file to modern standards
   * Add autolog.manpages
+  * Update copyright file to be dep5 compliant
+
+  [ Marcos ]
 
  -- Marcos Fouces <mfouces@yahoo.es>  Thu, 08 Dec 2016 13:25:10 +0100
 
