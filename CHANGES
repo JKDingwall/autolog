@@ -1,0 +1,64 @@
+CHANGES(autolog):
+================
+- 0.2:
+	Added 'hard' logout feature.  Several bug fixes.
+
+- 0.21:
+	Added 'pre-clear' option.
+
+- 0.30:
+	Rewrote the configuration file parser. Added group matching
+	and the "nowarn" option. Rewrote/cleaned up almost the whole
+	program.
+
+- 0.31:
+	Fixed bug with searching for group. If the group could not
+	be found from the username, the program would segmentation
+	fault.  Hopefully fixed.
+
+- 0.32:
+	re_exec seems to have a bug that dumps core in some cases.
+	I rewrote the pat_match routine to not use it. Both versions
+	of pat_match are included with an #ifdef.
+
+- 0.33: Nov 1996        Kyle Bateman <kyle@actarg.com>
+	
+	Fixed bug in logging routine.  When writing to log file,
+	the program could crash.  Also more careful check for
+	non-existent processes.
+
+- 0.34:	Dec 1996        Kyle Bateman <kyle@actarg.com>
+	
+	Added man pages (thanks to Christoph Lameter).
+	Some login processes didn't twiddle the "last access"
+	time when a user first logged in.  Checked to see if
+	last access was older than login time to rule out
+	such problems.
+
+- 0.35:	Oct 1998        Kyle Bateman <kyle@actarg.com>
+	
+	fixed segfault error (Thanks to Thomas Gray).
+	fclose(log) was being called even when the logfile
+	hadn't been opened.
+
+- 0.40: April 2000     Carsten Juerges <juerges@cip-bau.uni-hannover.de>
+	
+	Rewritten parts of the code to chase users and to make sure,
+	they get the information about their approaching end.
+	
+	April 14, 2000
+	
+	Detected some old(?) ps-commands which do not support the
+	parameters, I used. rewritten this part and enabled a
+	feature to pass any strange ps-command via config-file.
+	
+	April 28, 2000
+	
+	Checked README-file and the manual-entries to make sure
+	one will find information about all the new features.
+	Added a little feature "nolostkill" to stop this program
+	from killing lost processes.
+	
+	Only lost processes with uid (user-id) between 500 and 60000
+	will be killed, others usually belong to system processes.
+	

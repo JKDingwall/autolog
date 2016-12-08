@@ -1,0 +1,362 @@
+Autolog 0.40
+
+Autolog is a new version of autolog by Kyle Bateman (kyle@actarg.com),
+modified by me (Carsten Juerges, juerges@cip-bau.uni-hannover.de) to
+get the logout-warning on that terminal I worked in, last time.
+Before the warning was written on the login-screen, where I
+started X (startx), so it was difficult to get or to react on
+this warning.
+
+Now it is checked, which is the terminal with the shortest idle-time
+and the message is displayed there. So I can react on it, there.
+
+I put the old readme-text below the (=====)-line and added my changes
+(of details) into that text. They can be found by searching for "##".
+
+Here I just want to report about a few changes, I added to the program.
+
+ - first of all:
+	This program can run in daemon-mode or as "ordinary program".
+	As ordinary program it writes "/tmp/autolog.data" when starting.
+	
+	So it is not necessary to keep the program in memory to
+	chase sleeping users. As this file is read, when the
+	program starts. If this file doesn't exist, no problem.
+	It will be generated next time.
+	
+	See the options.
+	
+	If running as daemon, make sure, you don't start it
+	several times e.g. by crontab.
+	
+	If running as ordinary program, it will stay at least
+	as long in memory until all necessary kickouts are done.
+	And some more time to make sure, user doesn't return
+	2 minutes later. (Until als bans are over.)
+
+ - if a user logs out, before his session-limit is reached, his limit
+   will be reset. It was also possible to log in again, after being
+   kicked out.
+     -> fixed this. added a ban-time. (##-1)
+     		    the session-limit will be reset when the banning
+     		    has passed or a bit later, depends on when the
+     		    daemon wakes up from sleeping.
+
+     -> added little feature that kills forgotten processes.
+	they do appear (e.g. netscape) when a user does not
+	terminate netscape correctly.
+
+     -> daemon tries to wake up a sleeping user by beeping.
+	the user also gets an email, his beeping might not work.
+	Email might not work on a network, don't know, could
+	only test this on one network, there it worked.
+
+     -> being idle for too long is punished with 2 Mins ban.
+        Users should not be punished for being idle they
+        might be thinking about the current problem. They
+        deserve a little break.
+        These two minutes should only stop those user who
+        log in again and again to block the computer.
+
+     -> if the user tries to login before his ban-time ends,
+	he will be kicked out without any warning. He will
+	be banned for the originial ban-period, again :)
+	
+     -> changed the "exempt-code" to idle=-1, so idle=0
+     	will be usefull for demonstration-purpose.	
+     	
+     -> the information about crontab (down in the text)
+	has expired, if running this program as daemon.
+	left it, because i find the hints about crontabs
+	quite usefull.
+	
+        Maybe it is usefull to restart the program from time
+	to time as it might have halted due to any errors.
+	(via cron)
+
+        The program should only run once on a machine. Otherwise
+	the resulting user-information about being kicked out
+	it might be confusing.
+	
+     -> Make sure to reduce the size of the log-file from time
+	to time, as it is always growing when adding messages.
+	The logile or at least a part of it might be usefull
+	to find misconfiguration or even bugs in the program.
+	
+     	
+=======================================================================
+
+
+Autolog 0.35
+
+Autolog is a version of autologout (idleout-mcm) modified by me to allow
+a more detailed configuration file, and to accept command line parameters.
+According to David Dickson, the code originally came from the "Wizard's
+Grabbag" from the May 1990 Unix World.  He ported the code essentially
+unchanged.
+
+Mike Mitchell added some code to read a file "/etc/autologout.exempt"
+listing those users which should not be subject to auto logout.
+
+My system required a little more complex approach.  I wanted some
+users to be logged off more aggressively than others.  I wanted my own
+sessions to remain on line only if they existed on certain ports.
+I also wanted users coming in over the net to be subject to a little
+different idle time than other users.
+
+After doing version 0.20, several people wrote with various additions
+and patches.  The problem was that the original syntax of the autolog.conf
+file was a bit limiting and it was hard to work in too many additional
+features without making a big fat mess.  With the new, improved format
+of the configuration file, I should be able to accomodate many more
+future features.
+
+The configuration file consists of multiple lines, each of which describes
+a class of processes subject (or not subject) to a certain auto logout
+procedure.  A line consists of any number of switches.  Value switches are
+of the form: "name=value".  Boolean switches are of the form: "name" or
+"noname".  Here are some example lines:
+
+	name=root line=tty[1-7] idle=0
+	name=guest idle=5 grace=60 nomail hard warn
+	group=lynx-.* idle=10 grace=60 clear
+	idle=60 grace=30
+
+Using these switches, you can define a username, a group, and a tty line.
+These descriptions can contain wildcard characters (regular expressions).
+You can also define an idle time, a grace period and a few other options.
+When reading the configuration file, the program creates a record for each
+configuration line.  A value is assigned to each variable in the record
+regardless of whether or not you specify one explicitly.  Values for
+missing variables are provided by defaults which are compiled in and can
+be modified from the command line.
+
+If no configuration file is found, the program will create a single
+entry which has all values set from the defaults.  This entry will match
+any process on any port (name=.+ line=.+ group=.+).  Therefore, the default
+action is to kill all processes.
+
+The values which can be set for each entry are as follows:
+
+	name=
+	    A regular expression specifying which username(s) to match.
+	group=
+	    A regular expression specifying which group(s) to match.
+	line=
+	    A regular expression specifying which tty line(s) to match.
+	    Omit the "/dev/" part of the special name.
+	idle=
+	    An integer specifying the number of --minutes-- of idle
+	    (or connect) time to allow before beginning automatic logoff.
+	    An idle time of 0 exempts the process from automatic logoff.
+	    (##) changed this to "-1" => exempts idle-time.
+	         this allows short idle-time "0" for demonstrating.
+	grace=
+	    An integer specifying the number of --seconds-- from the initial
+	    warning to killing the process.
+	ban=
+	    An integer specifying the number of --minutes--, the user
+	    should stay away after exceeding his session-limit. (##-1)
+	hard
+	    A boolean value indicating total connect time will be
+	    considered rather than idle time.
+	mail
+	    A boolean value indicating that mail will be sent to the
+	    user explaining that he was killed.
+	clear
+	    A boolean value indicating that the screen will be cleared
+	    before a warning message is sent. (##)
+	    -> will only be cleared, if user is still on that screen.
+	warn
+	    A boolean value indicating that a warning message will be
+	    sent at the beginning of the "grace" period.
+	log
+	    A boolean value indicating that activities will be logged
+	    to the logfile (if it exists).
+
+Additionally I added a feature for exotic ps-versions:
+
+	ps=ps -ef
+	   a ps-command, which results in one heading line
+	   and lines starting with username and pid
+	   e.g. "ps=ps aux" on SuSE Linux.
+
+	lostkill
+	   A boolean value indicatin whether this program should
+	   kill lost processes or not. So place "nolostkill" in
+	   the config-file doesn't touch them.
+	   If enabled(default), this program will only kill lost
+	   processes with uid between 500 and 60000. Other uids
+	   (at least in some Linux dialects) belong to system
+	   processes which should not be killed.
+	   	
+Once configured, the program reads the utmp file, entry by entry.  The
+username for each 'user process' is compared to the entries in the
+configuration file.  The first entry to match both the name, the group,
+and the tty line of the process will be used to conduct the automatic
+logout.
+
+If no entries are found matching a given process, that process will be
+spared from an untimely demise.  Therefore, it is a good idea to always
+have a "cleanup" line at the end of the configuration file to catch
+anything that might have been missed by the more explicit definitions.
+Since the default name, group, and line are all ".+", a simple line like:
+
+	idle=30
+
+will do.  Actually, any one switch can be specified on the line and all the
+others will get the default values.
+
+See the sample file autolog.conf for an example configuration.
+
+Installation Instructions:
+
+	1.	If desired, edit the defaults in autolog.c such as
+		D_IDLE, D_GRACE, D_MAIL, etc.  (This is generally not
+		necessary).
+		
+		If you want the binary to land somewhere besides
+		/usr/sbin, edit the Makefile accordingly.
+	
+	2.	Type 'make install'.
+	
+	3.	Copy autolog.conf to /etc and then edit it to make the
+		changes needed by your system.  (See the instructions
+		above.)
+	
+	4.	Wait until the system has a bunch of idle processes.
+		Run "autolog -d -n |less" and examine the output to see
+		that the desired processes are going to "get the axe."
+		If it looks good, try running "autolog -d" to make sure.
+		When you're happy with your configuration file, setup cron.
+	
+	5.	In your Crontab file place a line that invokes
+		autolog about every few minutes, such as:
+		
+		0,10,20,30,40,50 * * * * /usr/sbin/autolog
+		
+		On my system cron only runs the process at night.
+		This way, users sessions stay on uninterrupted during the
+		workday.  I use the lines:
+
+		0 20 * * * /usr/sbin/autolog
+		0 22 * * * /usr/sbin/autolog
+		0  1 * * * /usr/sbin/autolog
+		
+
+COMMAND LINE PARAMETERS:
+
+    -a	(all processes) Print information on ALL utmp entries--not just
+        user processes.
+
+    -d	(debug mode) This is helpful in setting up your configuration file.
+        The program runs in foreground rather than forking and it prints
+        out verbose messages about what it is doing.
+
+    -n  (nokill) Use this to prevent autolog from actually "killing"
+        anyone.  Use -d and -n together when setting up a new
+        configuration file.
+
+    -o  (ordinary) Use this to start the program as ordinary
+	program. Otherwise it will stay as daemon in memory.
+	Good idea if you are low on memory.
+
+    -f  config_file_name
+        Use this to override the default: "/etc/autolog.conf"
+
+    -l  log_file_name
+        Use this to override the default: "/var/log/autolog.log"
+
+        Note that if this file doesn't exist, no logging will happen.
+        Create the file (with touch) to enable logging.
+
+    -t  idle_time
+        Use this to override the internal default idle time (minutes)
+
+    -g  grace_period
+        Use this to override the internal default grace period (seconds)
+
+    -m  yes/no
+        Use this to override the internal mailing switch.  If "yes"
+        the program will send mail to the users right after killing them.
+
+    -c  yes/no
+        Use this to override the internal "pre-clear" switch.  If "yes"
+        the program will clear the terminal screen before warning the user.
+
+    -w  yes/no
+        If set to "no" no warning message will be printed to processes
+        about to be killed.
+
+    -h  yes/no
+        Do timeouts based on total session time--not idle time. (hard)
+
+    -L  yes/no
+        If set to "yes" activities will be written to the logfile if
+        present.
+
+
+Bugs/Caveats:
+- The utmp file seems to only hold 8 characters worth of login name.
+  If your login name is shorter than this, note that autolog may only
+  see the first 8 characters.  This is screwing up the group search
+  function too.  This shouldn't be too hard to fix.  I'll
+  just have to derive the real login name from the pid or something...
+
+- There is a feature that would be very helpful that autolog doesn't have
+  yet.  The ppp program generally creates a login process which is seen
+  by autolog.  The problem is that network activity does not change the
+  idle time on the tty controlled by ppp.  So there is no way (with the
+  existing code) for autolog to know if the network link has gone idle for
+  a period of time (it appears idle all the time--no matter what happens.
+
+  So your choices are this:  You can leave ppp out of your
+  "autolog strategy" in which case it will look like an idle shell and will
+  get killed.  Or, you can put it in the configuration file with an
+  exemption (idle=0) in which case it will never get killed no matter what.
+
+  If someone knows where I can snoop in the OS (in a portable way) to find
+  out how long its been since a ppp login passed any network traffic, I
+  would add a ppp switch to be used for this purpose.
+
+- When this program get to another system, it sometime needs
+  to be recompiled. I compiled it in SuSE 6.3 and running under
+  SuSE 6.0 it gave a "segmentation fault" without recompiling.
+
+
+Ideas:
+- One might find out, how the "you have new mail"-message gets
+  to the user and try to use this way for letting the user know
+  about his coming end.
+- One might think about a pop-up box when running a session
+  without any terminals. At the moment this program tries to
+  send an email to the user. If one selects enough idle-time,
+  this should be ok.
+- Maybe it is possible when this deamon starts sleeping, it
+  actually terminates and gets started again after some time.
+  This might save some memory when sleeping or sleeping for more
+  than 5 Minutes. I assume, other deamons behave like this, too,
+  but I don't know how...
+
+
+Have fun knocking off those 'delinquent' users!  And don't let the power
+go to your head...
+
+Kyle Bateman
+kyle@actarg.com
+
+Be carefull when playing with a daemon. Devils like
+playing, but only they know all rules of their games!
+A game, plaid with a devil becomes the devil's game.
+
+Users should be informed about such a program running.
+Especially users, which are kicked off without warning
+might get very angry when loosing several hours of work.
+Keep in mind, some are running jobs over several hours.
+
+Carsten Juerges
+juerges@cip-bau.uni-hannover.de
+
+
+p.s.   quoting a part of "man strtok"
+       > BUGS   Never use this function.  This function modifies ...

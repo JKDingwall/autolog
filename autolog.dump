@@ -1,0 +1,96 @@
+/*****************************************************************************/
+/*									     */
+/*   Programm: autolog.dump	 C-Programm to log out sleeping	users	     */
+/*									     */
+/*   Autor:  Carsten Juerges     Erster Versuch:  06.04.2000		     */
+/*	     Kurze Wanne 1       Letztes Update:  10.04.2000		     */
+/*	     30926 Seelze						     */
+/*	     juerges@cip-bau.uni-hannover.de 				     */
+/*									     */
+/*   Rechner:  AMD K6-2		SuSE Linux 6.3				     */
+/*									     */
+/*   Meldung:  This version seems to worke quite good.			     */
+/*									     */
+/*   This files stores the old functions which have been rewritten.	     */
+/*									     */
+/*****************************************************************************/
+
+
+/*===========================================================================*/
+/*   get_PIDs 				  			  	  ===*/
+/*    - found, that some (old) ps-versions do not support my options      ===*/
+/*---------------------------------------------------------------------------*/
+
+get_PIDs(char *u_name){
+    char    mbuf[LINELEN];	  /* message buffer */
+
+    FILE    *ps;
+    int i;
+    int pid;
+
+    sprintf(mbuf, "ps -U %s --no-heading o pid",u_name); //##
+    if (!(ps = popen(mbuf, "r")) )
+	bailout("Can't use ps program", 6);
+
+    while (!feof(ps)) {
+        pid=0;
+	fscanf(ps,"%d", &pid); //##
+	if (pid>1){	/* otherwise feof or pid=0. can't kill pid=1 anyway. */
+	    ids_fill++;
+	    if (ids_fill > ids_max) {
+		ids_max = 2*(ids_max);
+		ids_lst  = (int*) realloc(ids_lst,sizeof(int)*
+						  (1+(ids_max)));
+	    }
+	    ids_lst[ids_fill]=pid;
+	}
+    }
+    fclose(ps);
+
+    if (debug)
+    {	printf (" |-> ");
+	for (i=1; i<=ids_fill; i++)
+	    printf (" %5d",ids_lst[i]);
+	printf ("\n");
+    }
+}
+
+/*---------------------------------------------------------------------------*/
+
+kill_lost_PIDs(){
+    char    mbuf[LINELEN];	   /* message buffer */
+    FILE    *ps;
+    char u_name[20];
+    int  pid, uid;
+    int  userpos=0;		   /* position of user found, 0 => not found */
+
+/*.. have ps tell us all current users, uids and pids. ......................*/
+    sprintf(mbuf, "ps ax --no-heading o user o uid o pid");    //##
+    if (debug) printf("\n");
+    if (!(ps = popen(mbuf, "r")) )
+	bailout("Can't use ps program", 6);
+    while (!feof(ps)) {
+        pid=0;
+	fscanf(ps,"%s", u_name); //##
+	fscanf(ps,"%d", &uid);   //##
+	fscanf(ps,"%d", &pid);   //##
+	if (pid>1){	/* otherwise feof or pid=0. can't kill pid=1 anyway. */
+	  if (100 < uid && uid < 65534){	  /* neither root nor nobody */
+	
+/*.. Get Position of user in userlst. .......................................*/
+	    strcpy(userlst[0].Name,  u_name);
+	    userpos=userfill;
+	    while ( strcmp(userlst[userpos].Name,u_name) ) userpos--;
+	
+	    if (userpos ==0 ){     /* could not find this user => not active */
+		if (do_bite) kill(pid, SIGKILL);   /* send the "kill" signal */
+		if (debug){
+		  printf("kill: %-10s %5d : %5d\n",u_name,uid,pid);
+		}
+	    }
+	  }
+	}
+    }
+    fclose(ps);
+}
+/*===========================================================================*/

@@ -1,0 +1,44 @@
+#! /bin/sh
+# Copyright (c) 2000 Carsten Juerges, Hannover, Germany.  All rights reserved.
+#
+# Author: Carsten Juerges <juerges@cip-bau.uni-hannover.de>, 2000
+#
+# /sbin/init.d/autolog
+#
+
+. /etc/rc.config
+
+base=${0##*/}
+link=${base#*[SK][0-9][0-9]}
+
+test $link = $base && START_AUTOLOG=yes
+test "$START_AUTOLOG" = yes || exit 0
+
+export PATH=/bin:/usr/bin:/sbin:/usr/sbin
+export HOME=/
+
+return=$rc_done
+case "$1" in
+    start)
+	echo -n "Starting autolog daemon"
+	startproc /usr/sbin/autolog || return=$rc_failed
+	echo -e "$return"
+	;;
+    stop)
+	echo -n "Shutting down autolog daemon"
+	killproc -TERM /usr/sbin/autolog || return=$rc_failed
+	echo -e "$return"
+	;;
+    restart)
+	$0 stop && $0 start || return=$rc_failed
+	;;
+    status)
+	checkproc /usr/sbin/autolog && echo "autolog up" || echo "No autolog"
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|restart}"
+	exit 1
+esac
+
+test "$return" = "$rc_done" || exit 1
+exit 0
