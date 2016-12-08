@@ -2,9 +2,12 @@ Source: autolog
 Build-Depends: debhelper (>= 5)
 Section: admin
 Priority: extra
-Maintainer: Luis Uribe <acme@eviled.org>
+Maintainer: Debian Security Tools Packaging Team <pkg-security-team@lists.alioth.debian.org>
+Uploaders: Marcos Fouces <mfouces@yahoo.es>
 Standards-Version: 3.9.1
 Homepage: http://gitorious.org/debian-packages/autolog
+Vcs-Git: https://anonscm.debian.org/git/pkg-security/autolog.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-security/autolog.git
 
 Package: autolog
 Architecture: any
