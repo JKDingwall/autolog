@@ -1,2 +1,3 @@
 version=3
+opts="dversionmangle=s/.debian//" \
 http://www.ibiblio.org/pub/Linux/system/admin/idle/autolog-(.*)\.tar.gz
