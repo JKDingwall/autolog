@@ -2,3 +2,4 @@
 02_autolog.c
 03_autolog.init
 04_check_ps_output.diff
+05_Fix-spelling-errors.patch
