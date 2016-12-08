@@ -1,9 +1,17 @@
 autolog (0.40+debian-1) UNRELEASED; urgency=medium
 
-  [ Marcos Fouces ]
-  * New upstream version 0.40+debian
-
-  [ Marcos ]
+  * Rename version to 0.40+debian. Deleted 
+  unnecesary files (*.spec and a binary)
+  * Assign to pkg-security team
+  * Bump to debhelper 10
+  * Fix homepage
+  * Fix watch file in order to mangle Debian version
+  * Add lsb-base dependency
+  * Delete temporary debhelper file
+  * Delete source.lintian-overrides
+  * Fix descriptions in control file
+  * Adapt rules file to modern standards
+  * Add autolog.manpages
 
  -- Marcos Fouces <mfouces@yahoo.es>  Thu, 08 Dec 2016 13:25:10 +0100
 
