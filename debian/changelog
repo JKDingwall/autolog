@@ -2,7 +2,7 @@ autolog (0.40+debian-1) UNRELEASED; urgency=medium
 
   * Rename version to 0.40+debian. 
   Deleted unnecessary files in source tarball (*.spec and a binary)
-  * Assign to pkg-security team
+  * Assign to pkg-security team (Closes: #783267)
   * Bump to debhelper 10
   * Fix homepage
   * Fix watch file in order to mangle Debian version
@@ -15,6 +15,7 @@ autolog (0.40+debian-1) UNRELEASED; urgency=medium
   * Update copyright file to be dep5 compliant
   * Add patch to fix spelling errors
   * Call invoke-rc.d without prepended path
+  * Restore "status" to invoke-rc.d options
   * Bump to 3.9.8 Standards-rev
 
  -- Marcos Fouces <mfouces@yahoo.es>  Thu, 08 Dec 2016 13:25:10 +0100
