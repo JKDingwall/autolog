@@ -1,5 +1,5 @@
 Source: autolog
-Build-Depends: debhelper (>= 5)
+Build-Depends: debhelper (>= 10)
 Section: admin
 Priority: extra
 Maintainer: Debian Security Tools Packaging Team <pkg-security-team@lists.alioth.debian.org>
