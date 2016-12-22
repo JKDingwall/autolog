@@ -16,7 +16,7 @@ autolog (0.40+debian-1) unstable; urgency=medium
   * Add patch to fix spelling errors
   * Call invoke-rc.d without prepended path
   * Restore "status" to invoke-rc.d options
-  * Bump to 3.9.8 Standards-rev
+  * Bump std-version to 3.9.8
 
  -- Marcos Fouces <mfouces@yahoo.es>  Thu, 08 Dec 2016 13:25:10 +0100
 
