@@ -1,9 +1,7 @@
 From: Luis Uribe <acme@eviled.org>
 Subject: Patch for autolog.c
-Index: autolog/autolog.c
-===================================================================
---- autolog.orig/autolog.c	2010-03-25 20:01:19.000000000 -0500
-+++ autolog/autolog.c	2010-04-02 10:04:43.000000000 -0500
+--- a/autolog.c
++++ b/autolog.c
 @@ -114,7 +114,7 @@
  int listall	= 0;
  char *confname	= "/etc/autolog.conf";

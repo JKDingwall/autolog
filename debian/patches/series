@@ -1,5 +1,5 @@
-01_Makefile.diff
-02_autolog.c
-03_autolog.init
-04_check_ps_output.diff
+01_Makefile.patch
+02_autolog.patch
+03_init-LSB-compliant.patch
+04_check_ps_output.patch
 05_Fix-spelling-errors.patch

@@ -1,10 +1,8 @@
 From: Julien Viard de Galbert <julien@vdg.blogsite.org>
 Description: Patch for fixing ps output when it has more than 256 bytes
 Bug-Debian: 553502
-Index: autolog/autolog.c
-===================================================================
---- autolog.orig/autolog.c	2010-10-30 21:24:17.000000000 -0500
-+++ autolog/autolog.c	2010-10-30 21:24:17.000000000 -0500
+--- a/autolog.c
++++ b/autolog.c
 @@ -1082,6 +1082,18 @@
  		}
  	    }

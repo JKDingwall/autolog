@@ -1,9 +1,7 @@
 From: Luis Uribe <acme@eviled.org>
 Subject: Make the autolog.init script LSB-compliant
-Index: autolog/autolog.init
-===================================================================
---- autolog.orig/autolog.init	2010-03-25 20:01:19.000000000 -0500
-+++ autolog/autolog.init	2010-04-02 10:04:44.000000000 -0500
+--- a/autolog.init
++++ b/autolog.init
 @@ -1,44 +1,57 @@
  #! /bin/sh
 -# Copyright (c) 2000 Carsten Juerges, Hannover, Germany.  All rights reserved.
