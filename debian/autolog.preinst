@@ -1,32 +1,32 @@
 #! /bin/sh
 set -e
-PATH=/bin:/usr/bin
 
-if grep -q "#-- autolog begin" /etc/crontab; then
+case "$1" in
+    install|upgrade)
+    if grep -q "#-- autolog begin" /etc/crontab; then
 	echo -n Removing old autolog entry from /etc/crontab...
 	cp /etc/crontab /etc/crontab.new
 	sed -e '/#-- autolog begin/,/#-- autolog end/d' </etc/crontab.new >/etc/crontab
 	rm /etc/crontab.new
 	echo done.
-fi
+    fi
 
-if [ "$1" = "upgrade" ]; then
 	if [ -e /etc/cron.d/autolog ]
 	then
 		echo Removing old autolog entry from /etc/cron.d
 		rm -f /etc/cron.d/autolog
 	fi
+    ;;
 
-if [ `printf %0.4s "$2"` = "0.35" ]; then
-cat << EOF
+    abort-upgrade)
+    ;;
 
-  Note that autolog runs as a daemon by default starting with version 0.40 rather
-  than the old cron-based method.  Please see the man page or docs if you still 
-  wish to run it from cron
+    *)
+        echo "preinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
 
-EOF
-
-fi
-
-fi
 #DEBHELPER#
+
+exit 0

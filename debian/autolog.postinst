@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+	configure)
+        touch /var/log/autolog.log
+        chown root:adm /var/log/autolog.log
+        chmod 0644 /var/log/autolog.log
+        
+        update-rc.d autolog defaults >/dev/null
+        
+        if [ -x invoke-rc.d ]; then
+        invoke-rc.d autolog restart
+        else
+            /etc/init.d/autolog restart
+        fi
+		;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+
+		;;
+
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,8 +1,9 @@
 #!/bin/sh
+
 set -e
 
-#DEBHELPER#
-if [ "$1" = "purge" ]; then
+case "$1" in
+	purge)
 	if find /var/log -maxdepth 1 -name autolog.log -o -name autolog.log.[0-9].gz |
 			grep -q var ; then
 		echo -n Removing logfiles...
@@ -10,5 +11,18 @@ if [ "$1" = "purge" ]; then
 		echo done.
 	fi
 	update-rc.d autolog remove >/dev/null
-fi
+		;;
+
+	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+
+		;;
+
+	*)
+		echo "postrm called with unknown argument \`$1'" >&2
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0
 
