@@ -1,0 +1,25 @@
+Description: Fix Makefile in order to let dehelper inject all pertinent compilation flags.
+Author: Marcos Fouces <mfouces@yahoo.es>
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+
+--- a/Makefile
++++ b/Makefile
+@@ -3,7 +3,7 @@
+ # The -g flag is to include debugging information.  It gets
+ # stripped back out in the install command anyway.
+ CC	= gcc
+-CFLAGS += -g
++#CFLAGS += -g
+ MANDIR  = $(DESTDIR)/usr/share/man
+ BINDIR  = $(DESTDIR)/usr/sbin/
+ STATEDIR = $(DESTDIR)/var/lib/autolog/
+@@ -12,7 +12,7 @@
+ # *********************************************************
+ 
+ autolog:	autolog.c
+-	$(CC) $(CFLAGS) -o autolog autolog.c
++	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o autolog autolog.c
+ 
+ install:	autolog
+ 	install -d $(BINDIR) $(INIDIR) $(CONFDIR) $(STATEDIR) $(LOGDIR) $(MANDIR)
