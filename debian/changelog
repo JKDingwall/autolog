@@ -4,7 +4,9 @@ autolog (0.40+debian-2) UNRELEASED; urgency=medium
   * Major rewrite of autolog.init file fixing piuparts issues 
     (closes: #605890, #850761)
   * Polish and rename properly {pre,post}{inst,rem} files.
-  * Create 06_set_proper_compilation_flags.patch.
+  * Create 06_adjust_makefile.patch
+    - allow debhelper to inject CPPFLAGS and LDFLAGS
+    - allow overriding CC (needed for cross compiling)
 
  -- Marcos Fouces <mfouces@yahoo.es>  Fri, 17 Mar 2017 23:31:57 +0100
 

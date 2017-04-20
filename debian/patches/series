@@ -3,4 +3,4 @@
 03_init-LSB-compliant.patch
 04_check_ps_output.patch
 05_Fix-spelling-errors.patch
-06_set_proper_compilation_flags.patch
+06_adjust_makefile.patch

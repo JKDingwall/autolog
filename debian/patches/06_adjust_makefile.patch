@@ -1,15 +1,19 @@
-Description: Fix Makefile in order to let dehelper inject all pertinent compilation flags.
+Description: Adjust Makefile
+ allow dehelper to inject all pertinent compilation flags and allow overriding
+ CC (needed for cross compiling)
 Author: Marcos Fouces <mfouces@yahoo.es>
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 
 --- a/Makefile
 +++ b/Makefile
-@@ -3,7 +3,7 @@
+@@ -2,8 +2,8 @@
+ # Change this section as needed
  # The -g flag is to include debugging information.  It gets
  # stripped back out in the install command anyway.
- CC	= gcc
+-CC	= gcc
 -CFLAGS += -g
++CC      ?= gcc
 +#CFLAGS += -g
  MANDIR  = $(DESTDIR)/usr/share/man
  BINDIR  = $(DESTDIR)/usr/sbin/
