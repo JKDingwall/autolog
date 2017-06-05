@@ -1,7 +1,7 @@
 Description: Adjust Makefile
  allow dehelper to inject all pertinent compilation flags and allow overriding
  CC (needed for cross compiling)
-Author: Marcos Fouces <mfouces@yahoo.es>
+Author: Marcos Fouces <marcos.fouces@gmail.com>
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 

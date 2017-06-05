@@ -3,7 +3,7 @@ Build-Depends: debhelper (>= 10)
 Section: admin
 Priority: extra
 Maintainer: Debian Security Tools Packaging Team <pkg-security-team@lists.alioth.debian.org>
-Uploaders: Marcos Fouces <mfouces@yahoo.es>
+Uploaders: Marcos Fouces <marcos.fouces@gmail.com>
 Standards-Version: 3.9.8
 Homepage: http://www.ibiblio.org/pub/Linux/system/admin/idle/
 Vcs-Git: https://anonscm.debian.org/git/pkg-security/autolog.git

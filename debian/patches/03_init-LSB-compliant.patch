@@ -1,6 +1,6 @@
 Description: Luis Uribe fixed autolog.init file in order to be LSB-compliant. 
 Marcos Fouces added support for "status" option, modernized functions and fixed (de)installation issues on Debian systems.
-Author: Luis Uribe <acme@eviled.org>, Marcos Fouces <mfouces@yahoo.es>
+Author: Luis Uribe <acme@eviled.org>, Marcos Fouces <marcos.fouces@gmail.com>
 Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=850761
 Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=605890
 ---
