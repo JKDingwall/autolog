@@ -1,0 +1,16 @@
+[Unit]
+Description=autolog - Log out idle users
+PartOf=autolog.service
+Documentation=man:autolog(8)
+
+[Service]
+PrivateTmp=true
+PrivateNetwork=yes
+CapabilityBoundingSet=~CAP_SYS_PTRACE
+Type=forking
+EnvironmentFile=/etc/autolog.conf
+ExecStart=/usr/sbin/autolog
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
