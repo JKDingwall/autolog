@@ -1,7 +1,7 @@
 Source: autolog
 Build-Depends: debhelper (>= 10)
 Section: admin
-Priority: extra
+Priority: optional
 Maintainer: Debian Security Tools Packaging Team <pkg-security-team@lists.alioth.debian.org>
 Uploaders: Marcos Fouces <marcos.fouces@gmail.com>
 Standards-Version: 4.0.0
