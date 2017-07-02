@@ -18,7 +18,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  MANDIR  = $(DESTDIR)/usr/share/man
  BINDIR  = $(DESTDIR)/usr/sbin/
  STATEDIR = $(DESTDIR)/var/lib/autolog/
-@@ -12,7 +12,7 @@
+@@ -12,12 +12,12 @@
  # *********************************************************
  
  autolog:	autolog.c
@@ -27,3 +27,9 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  
  install:	autolog
  	install -d $(BINDIR) $(INIDIR) $(CONFDIR) $(STATEDIR) $(LOGDIR) $(MANDIR)
+ 	install -m744 -o 0 -g 0 autolog           $(BINDIR)
+-	install -m744 -o 0 -g 0 autolog.init      $(INIDIR)/autolog
++#	install -m744 -o 0 -g 0 autolog.init      $(INIDIR)/autolog
+ 	install -m644 -o 0 -g 0 autolog.conf      $(CONFDIR)
+ 
+ clean:

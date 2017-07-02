@@ -8,8 +8,9 @@ autolog (0.40+debian-2) UNRELEASED; urgency=medium
     - allow debhelper to inject CPPFLAGS and LDFLAGS
     - allow overriding CC (needed for cross compiling)
   * Add 07_clang-ftbfs.patch. Thanks to Arthur Marble (Closes: #740031)
-  
- -- Marcos Fouces <marcos.fouces@gmail.com>  Fri, 17 Mar 2017 23:31:57 +0100
+  * Rely on dh_installinit to install autolog.init.d
+
+ -- Marcos Fouces <marcos.fouces@gmail.com>  Sun, 02 Jul 2017 08:05:25 +0200
 
 autolog (0.40+debian-1) unstable; urgency=medium
 
