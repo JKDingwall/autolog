@@ -3,13 +3,12 @@ set -e
 
 case "$1" in
 	configure)
-        touch /var/log/autolog.log
-        chown root:adm /var/log/autolog.log
-        chmod 0644 /var/log/autolog.log
+		touch /var/log/autolog.log
+		chown root:adm /var/log/autolog.log
+		chmod 0644 /var/log/autolog.log
 		;;
 
 	abort-upgrade|abort-remove|abort-deconfigure)
-
 		;;
 
 	*)
