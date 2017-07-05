@@ -4,12 +4,7 @@ set -e
 
 case "$1" in
 	purge)
-	if find /var/log -maxdepth 1 -name autolog.log -o -name autolog.log.[0-9].gz |
-			grep -q var ; then
-		rm -f /var/log/autolog.log /var/log/autolog.log.[0-9].gz
-		echo done.
-	fi
-
+		rm -f /var/log/autolog.log*
 		;;
 
 	remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
