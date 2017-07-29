@@ -1,4 +1,4 @@
-autolog (0.40+debian-2) UNRELEASED; urgency=medium
+autolog (0.40+debian-2) unstable; urgency=medium
 
   [ Marcos Fouces ]
   * Reorder, refresh and rename patches properly
