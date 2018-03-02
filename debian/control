@@ -2,7 +2,7 @@ Source: autolog
 Build-Depends: debhelper (>= 10)
 Section: admin
 Priority: optional
-Maintainer: Debian Security Tools Packaging Team <pkg-security-team@lists.alioth.debian.org>
+Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
 Uploaders: Marcos Fouces <marcos.fouces@gmail.com>
 Standards-Version: 4.0.0
 Homepage: http://www.ibiblio.org/pub/Linux/system/admin/idle/
