@@ -8,4 +8,4 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 # the clean target may be called with patches unapplied; workaround the
 # upstream makefile exiting uncleanly
 override_dh_auto_clean:
-	make clean || true
+	$(MAKE) clean || true
