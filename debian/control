@@ -1,5 +1,5 @@
 Source: autolog
-Build-Depends: debhelper (>= 10)
+Build-Depends: debhelper (>= 11)
 Section: admin
 Priority: optional
 Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
