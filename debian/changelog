@@ -1,3 +1,16 @@
+autolog (0.40+debian-3) unstable; urgency=medium
+
+  * Team upload.
+  * Update team maintainer address to Debian Security Tools
+    <team+pkg-security@tracker.debian.org>
+  * Update Vcs-Git and Vcs-Browser for the move to salsa.debian.org
+  * Replace exim4 by default-mta in Recommends.
+  * Bump Standards-Version to 4.2.1.
+  * Switch debhelper compat level to 11.
+  * Use $(MAKE) instead of make in debian/rules
+
+ -- Raphaël Hertzog <hertzog@debian.org>  Tue, 28 Aug 2018 10:36:16 +0200
+
 autolog (0.40+debian-2) unstable; urgency=medium
 
   [ Marcos Fouces ]
