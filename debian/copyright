@@ -1,6 +1,12 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: autolog
 Source: http://www.ibiblio.org/pub/Linux/system/admin/idle/
+Files-Excluded:
+ autolog
+ autolog-0.40.spec
+Comment:
+ Both files are useless for Debian packaging: autolog is a precompiled binary
+ and autolog-0.40.spec is for RPM packaging.
 
 Files: *
 Copyright:  2000 Carsten Juerges <juerges@cip-bau.uni-hannover.de> 
