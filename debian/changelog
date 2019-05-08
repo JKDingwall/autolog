@@ -23,7 +23,7 @@ autolog (0.40+debian-2) unstable; urgency=medium
 
   [ Marcos Fouces ]
   * Reorder, refresh and rename patches properly
-  * Major rewrite of autolog.init file fixing piuparts issues 
+  * Major rewrite of autolog.init file fixing piuparts issues
     (closes: #605890, #850761)
   * Polish and rename properly {pre,post}{inst,rem} files.
   * Create 06_adjust_makefile.patch
@@ -47,7 +47,7 @@ autolog (0.40+debian-2) unstable; urgency=medium
 
 autolog (0.40+debian-1) unstable; urgency=medium
 
-  * Rename version to 0.40+debian. 
+  * Rename version to 0.40+debian.
     Deleted unnecessary files in source tarball (*.spec and a binary)
   * Assign to pkg-security team (Closes: #783267)
   * Bump to debhelper 10
@@ -85,7 +85,7 @@ autolog (0.40-13) unstable; urgency=low
     - Fix spelling-error-in-manpage. Makes lintian happy.
   * debian/patches/01_Makefile.diff
     - Change the INIDIR to /etc/init.d
- 
+
  -- Luis Uribe <acme@eviled.org>  Sat, 30 Oct 2010 21:19:38 -0500
 
 autolog (0.40-12) unstable; urgency=low
