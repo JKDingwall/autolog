@@ -12,6 +12,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-security-team/autolog
 Package: autolog
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, cron (>= 3.0pl1-42), lsb-base (>=3.0-6)
+Pre-Depends: ${misc:Pre-Depends}
 Recommends: default-mta | mail-transport-agent
 Description: Log out idle users
  The  program reads the utmp file, entry by entry.  The username for each
