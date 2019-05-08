@@ -6,6 +6,8 @@ autolog (0.40+debian-4) UNRELEASED; urgency=medium
     - Bump to Standards-Version 4.3.0 (no changes required).
   * d/copyright
     -  Add proper explanation for upstream repacked tarball.
+  *d/u/metadata
+    - Add upstream metadata.
 
  -- Marcos Fouces <marcos.fouces@gmail.com>  Wed, 08 May 2019 22:14:09 +0200
 
