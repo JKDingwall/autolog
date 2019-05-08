@@ -6,6 +6,7 @@ autolog (0.40+debian-4) UNRELEASED; urgency=medium
     - Bump to Standards-Version 4.3.0 (no changes required).
     - Add Pre-Depends: ${misc:Pre-Depends} to handle
       --skip-systemd-native invoke-rc.d flag properly.
+    - Remove unnecessary greater-than versioned dependencies.
   * d/copyright
     -  Add proper explanation for upstream repacked tarball.
   *d/u/metadata
