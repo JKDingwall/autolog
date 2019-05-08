@@ -3,6 +3,7 @@ autolog (0.40+debian-4) UNRELEASED; urgency=medium
   * d/control
     - Bump debhelper compatibility level to 12.
     - Switch Build-Depends from debhelper to debhelper-compat.
+    - Bump to Standards-Version 4.3.0 (no changes required).
   * d/copyright
     -  Add proper explanation for upstream repacked tarball.
 
