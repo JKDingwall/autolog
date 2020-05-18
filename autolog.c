@@ -1082,6 +1082,18 @@ kill_lost_PIDs()
 		}
 	    }
 	}
+    /* Read to the end of line to avoid parsing the rest of the command
+     * line in next round and getting a segfault as ps_pid will be null!!
+     */
+    i=strlen(iline);
+    while(iline[i-1] != '\n'){
+        if(!fgets(iline, LINELEN, ps)) {
+          /* end of file, exit*/
+          fclose(ps);
+          return;
+        }
+        i=strlen(iline);
+    }
     }
     fclose(ps);
 }
