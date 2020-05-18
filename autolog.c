@@ -62,6 +62,9 @@
 #include    <grp.h>
 #include    <regex.h>
 #include    <malloc.h>
+#include    <ctype.h>
+#include    <stdlib.h>
+#include    <unistd.h>
 
 #define     D_IDLE      30  /* maximum idle time (minutes)		*/
 #define     D_GRACE    120  /* grace time (sec) for user reply		*/
@@ -259,7 +262,7 @@ main(int argc, char *argv[])
 			chck_pid = pres_time + 10 * 60;
 
 			if (debug)
-				printf("next check for processes after %10d.\n", chck_pid);
+				printf("next check for processes after %10ld.\n", chck_pid);
 		}
 		if (debug) {
 			//show_results();
@@ -304,7 +307,11 @@ check_utmp()
 		msg = "Non-user process:";
 	if (strlen(msg)) {
 		if (listall)
-			printf("%s N:%-8s P:%5d Login:%s", msg,utmpp->ut_user,utmpp->ut_pid,ctime(&utmpp->ut_time));
+			printf("%s N:%-8s P:%5d Login:%s",
+			       msg,
+			       utmpp->ut_user,
+			       utmpp->ut_pid,
+			       ctime(&utmpp->ut_time));
 		return 0;
 	}
 	if (dev[5] != ':' && stat(dev, &status)) {
@@ -326,7 +333,7 @@ check_utmp()
 	name[UT_NAMESIZE] = '\0';         /* null terminate user name string */
 
 	if (listall)
-		printf("Checking: %-11s on %-12s I:%4d  T:%d Login: %s",
+		printf("Checking: %-11s on %-12s I:%4ld  T:%d Login: %s",
 		       name,dev,
 		       idle,
 		       utmpp->ut_type,
@@ -425,16 +432,15 @@ load_users()
 	/*.. if necessary extend list. ..............................................*/
 	if (userfill > usermax) {
 		usermax = 2 * userfill;
-// TODO: realloc increase not zero initialised
 		userlst = (userdata *)realloc(userlst, sizeof(userdata) * (1 + usermax));
 	}
 
 	/*.. read all the data-lines. ...............................................*/
 	for (userpos = 1; userpos <= userfill; userpos++) {
 		fscanf(f, " %s %d %s %d %d %d %d",
-		       &userlst[userpos].Name,
+		       userlst[userpos].Name,
 		       &userlst[userpos].UserID,
-		       &userlst[userpos].Device,
+		       userlst[userpos].Device,
 		       &userlst[userpos].IdleTime,
 		       &userlst[userpos].SessStrt,
 		       &userlst[userpos].Ban_Ends,
@@ -633,7 +639,7 @@ check_idle(userdata *akt_usr)
 	/*.. If user has logged out, check his Session time and so. .................*/
 
 	if (debug)
-		printf("now:  %d = %s", pres_time, ctime(&pres_time));
+		printf("now:  %ld = %s", pres_time, ctime(&pres_time));
 
 	if (listall)
 		printf("\nChecking: %-11s on %-12s I:%-4d\n", name, dev, idle);
@@ -727,7 +733,7 @@ check_idle(userdata *akt_usr)
 		if (debug)
 			printf("idle-state: %3d / %d:\n", idle, ce->idle);
 		if (debug)
-			printf("sess-state: %3d / %d:\n", stime / 60, ce->idle);
+			printf("sess-state: %3ld / %d:\n", stime / 60, ce->idle);
 
 		time_left = 60 * ce->idle - stime;
 		if (debug)
@@ -740,7 +746,7 @@ check_idle(userdata *akt_usr)
 		}
 
 		if (debug)
-			printf("Subject to logout   Total time: %4d (%2d allowed)\n",
+			printf("Subject to logout   Total time: %4ld (%2d allowed)\n",
 			       stime / 60, ce->idle);
 	}
 	if (stat(ddev, &status)) {

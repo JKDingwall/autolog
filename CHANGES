@@ -78,3 +78,6 @@ CHANGES(autolog):
 	- consistent tabbed indent instead of whitespace mix
 	- insert spaces around operators for better readability
 	- consistent brace usage for if/then/else etc
+
+	Squash some warnings reported by gcc
+	  (gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0)
