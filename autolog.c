@@ -23,7 +23,7 @@
 /*	- Looks quite dirty, should be beautified, sometimes :)		     */
 /*									     */
 /*   Warning:								     */
-/*      - Keep in mind: Someone who is kicked off might loose some data.     */
+/*      - Keep in mind: Someone who is kicked off might lose some data.      */
 /*      - This program is distributed in the hope that it will be useful,    */
 /*        but WITHOUT ANY WARRANTY; without even the implied warranty of     */
 /*        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	     */
