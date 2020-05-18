@@ -355,7 +355,7 @@ save_users(){
 
     if (!(f=fopen(datfname,"w+"))) {
 	bailout("Can't create data-file.", 6);
-	return;
+	return 0;
     }
 
     fprintf(f,"%d\n",userfill);
@@ -376,7 +376,7 @@ load_users(){
     FILE* f;
 
 /*.. if no table exists, no problem, just return. ...........................*/
-    if (!(f=fopen(datfname,"r"))) { return; }
+    if (!(f=fopen(datfname,"r"))) { return 0; }
 
 /*.. check, how many lines with data will follow. ...........................*/
     fscanf(f,"%d",&userfill);
@@ -1041,7 +1041,7 @@ kill_lost_PIDs()
 /*.. have ps tell us all current users, uids and pids. ......................*/
     if (!(ps = popen(ps_cmd, "r")) ){
 	bailout("Can't use ps program", 6);
-	return;
+	return 0;
     }
     fgets(iline, LINELEN, ps);		 /* get header-line */
 
@@ -1090,7 +1090,7 @@ kill_lost_PIDs()
         if(!fgets(iline, LINELEN, ps)) {
           /* end of file, exit*/
           fclose(ps);
-          return;
+          return 0;
         }
         i=strlen(iline);
     }
