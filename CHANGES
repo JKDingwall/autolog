@@ -73,3 +73,8 @@ CHANGES(autolog):
 	- 06_adjust_makefile.patch
 	- 07_clang-ftbfs.patch
 	- 08_trailing_whitespace.patch
+
+	Reformat the autolog.c source to for a more consistent style:
+	- consistent tabbed indent instead of whitespace mix
+	- insert spaces around operators for better readability
+	- consistent brace usage for if/then/else etc
