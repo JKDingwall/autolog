@@ -138,7 +138,7 @@ typedef struct conf
     int     log;	 /* log actions to logfile	*/
     } conf_el;
 conf_el c_arr[MAXCONF];
-									
+
 int sleeptime	= Max_Sleep; /* maximum amount of time	*/
 int sleep_max	= Max_Sleep; /*  to sleep for daemon.	*/
 int c_idx	= 0;
@@ -148,7 +148,7 @@ int	  usermax =0;	 /* current size of List.	*/
 userdata* userlst;	 /* Store user-Data here.	*/
 
 int  	  ids_fill;
-int	  ids_max;  	
+int	  ids_max;
 int	  *ids_lst;
 
 time_t    time();	 /* they are used so often      */
@@ -182,7 +182,7 @@ main(int argc, char *argv[])
 		default:
 		fprintf(stderr,"autologout: illegal switch: %s\n", argv[i]);
 	    }
-	}	
+	}
 	else    fprintf(stderr,"autologout: illegal parameter: %s\n", argv[i]);
     } /* for */
     ps_cmd="ps aux";
@@ -236,7 +236,7 @@ main(int argc, char *argv[])
 
 	  if (debug)
 	    printf("next check for processes after %10d.\n",chck_pid);
-	
+
 	}
 	if (debug)
 	{ //show_results();
@@ -264,7 +264,7 @@ check_utmp(){		/* select utmp entries needing killing */
     struct stat status;
     time_t idle, atime;
 
-    int	    userpos=0;	/* position of user found, 0 => not found */ 	
+    int	    userpos=0;	/* position of user found, 0 => not found */
 
     sprintf(prname,"/proc/%d",utmpp->ut_pid);   /* append /proc/ to proclist */
     sprintf(dev,   "/dev/%s" ,utmpp->ut_line);  /* append /dev/ to base name */
@@ -305,8 +305,8 @@ check_utmp(){		/* select utmp entries needing killing */
 
 /*.. Get Position of user in userlst. .......................................*/
     userpos=userfill;
-    while ( strcmp(userlst[userpos].Name,name) ) userpos--; 
-	
+    while ( strcmp(userlst[userpos].Name,name) ) userpos--;
+
 /*.. if not found -> add user to userlst. ...................................*/
     if ( userpos ==0 ) {
 	userfill++;
@@ -334,7 +334,7 @@ check_utmp(){		/* select utmp entries needing killing */
 }
 
 show_results(){
-    int	    userpos=0;	/* position of user found, 0 => not found */ 	
+    int	    userpos=0;	/* position of user found, 0 => not found */
 
     printf("\nfound: %2d\n\n",userfill);
     printf("     Username  UserID Terminal     idle Starttime  BanningEnd WarningEnd\n");
@@ -349,7 +349,7 @@ show_results(){
 }
 
 save_users(){
-    int	    userpos=0;	/* position of user found, 0 => not found */	
+    int	    userpos=0;	/* position of user found, 0 => not found */
 
     FILE* f;
 
@@ -371,7 +371,7 @@ save_users(){
 }
 
 load_users(){
-    int	    userpos=0;	/* position of user found, 0 => not found */	
+    int	    userpos=0;	/* position of user found, 0 => not found */
 
     FILE* f;
 
@@ -481,7 +481,7 @@ eat_confile()
 	    }
 	    while(s=strtok(0,delims));
 	    idle=c_arr[c_idx].idle;
-	
+
 /*.. Maybe it is necessary to reduce the max. sleeptime to shortest session. */
 	    if (0<idle)				 /* but not to zero seconds. */
 		if (60*idle < sleep_max)  sleep_max=60*idle;
@@ -517,7 +517,7 @@ pat_match(char *patt, char *strg)
     {
     struct re_pattern_buffer rpb;
     int len, retval = 0;
-	
+
 /*    if (debug)
         printf("pat_match:%s:%s:\n",patt,strg); */
     len = strlen(patt+256);
@@ -626,14 +626,14 @@ check_idle(userdata* akt_usr)
         } else lower_sleep(ChckSleep);		/* user might come back      */
 
 	strcpy(akt_usr->Device, ".");		/* "Flag": user logged out.  */
-	
+
 	if (debug){
 	    if (stat(ddev, &status))
 		printf("user has logged out.\n");
 	    else if (status.st_uid != akt_usr->UserID){
 		printf("%4d <> %4d\n",status.st_uid,akt_usr->UserID);
 		printf("user has changed -> do not disturb.\n");
-	    }	
+	    }
 	}
 	return(0);
     }
@@ -643,7 +643,7 @@ check_idle(userdata* akt_usr)
       if ( akt_usr->Ban_Ends<pres_time ){
 	if (idle < ce->idle){		      /* if user was recently active */
 	    akt_usr->WarnEnds = 0;	      /* set to not warned.          */
-	    return(0);		
+	    return(0);
 	}
 	if (debug)
 	    printf("Subject to logout   Idle time: %4d (%2d allowed)\n",
@@ -656,13 +656,13 @@ check_idle(userdata* akt_usr)
 /*.. In case, he leaves now, his ban will end after his banning-time. .......*/
 /*.. This will also increase his banning-time in case he returnes to early. .*/
 /*.. Set end of banning to  current time + time to ban user. ................*/
-	akt_usr->Ban_Ends = pres_time    + 60*ce->ban;	
+	akt_usr->Ban_Ends = pres_time    + 60*ce->ban;
 	if (debug) printf("Banning should end: %10d\n", akt_usr->Ban_Ends );
-			
+
 /*.. Make sure, daemon doesn't sleep too long from now. .....................*/
 	if (debug) printf("idle-state: %3d / %d:\n",idle,    ce->idle );
 	if (debug) printf("sess-state: %3d / %d:\n",stime/60,ce->idle );
-	
+
 	time_left=60*ce->idle - stime;
 	if (debug)
 	    printf("time left: %4d sec.\n", time_left);
@@ -678,20 +678,20 @@ check_idle(userdata* akt_usr)
 	bailout("Can't get status of user's terminal", 2);
 	return(0);
     }
-	
+
 
 /*.. action either warning or killing. */
 //    if (akt_usr->WarnEndsed && (pres_time > akt_usr->Ban_Ends) ) {
     if (0<akt_usr->WarnEnds && (pres_time > akt_usr->WarnEnds) ) {
 	if (debug)
 	  printf("Killing user, now.\n");
-	
+
 	if (kill_PIDs(name,dev)==1) 	/* try to kill users' processes      */
 	     mesg(LOGOFF,  name, ddev, stime/60, idle, ce); /* mail to user  */
 	else mesg(NOLOGOFF,name, ddev, stime/60, idle, ce); /* couldn't kill */
 	if (ce->hard)
 	      akt_usr->WarnEnds =-1;	/* if user returnes at ones -> angry */
-	else{ akt_usr->WarnEnds =-2;	
+	else{ akt_usr->WarnEnds =-2;
 	      akt_usr->Ban_Ends = pres_time /* give other users a chance     */
 				+ Idle_Ban; /*  to catch this computer.      */
 	     lower_sleep(ChckSleep);
@@ -735,7 +735,7 @@ check_idle(userdata* akt_usr)
 /*----------------------------------------------------------------------------*/
 /* this version assumes that ps -au returns one header-line and then	      */
 /* lines with usernames, pids and some other stuff			      */
-{   char   prname[LINELEN], iline[LINELEN];	
+{   char   prname[LINELEN], iline[LINELEN];
     char   *s;
     char   *ps_name, *ps_pid, *ps_dev;
 
@@ -1002,7 +1002,7 @@ log_msg(char *message) { /* This function adds something to a logfile. ......*/
 	if (log==NULL) return(1);			/* fopen failed.     */
 	sprintf(str_time,"%s",ctime(&pres_time)+3);
 	str_time[strlen(str_time)-1]=0;
-	
+
         fprintf(log, "%s - %s\n",str_time,message);
 	fclose(log);
     	return(0);
@@ -1050,7 +1050,7 @@ kill_lost_PIDs()
 	ps_name= strtok(iline,delims);   /* manual: Never use this function. */
 	ps_pid = strtok(0,delims);
 	pid    = atoi(ps_pid);
-	
+
 	sprintf(prname,"/proc/%d",pid);   /* append /proc/ to proclist */
 	if (stat(prname, &status)){
 	    userpos=-1;			  /* => process will be killed. */
@@ -1064,12 +1064,12 @@ kill_lost_PIDs()
 		printf("%-8s -> %5s %5d %5d\n", ps_name, ps_pid, pid,uid);
 
 	    if (500 <= uid && uid <= 60000){	  /* neither root nor nobody */
-	
+
 /*.. Get Position of user in userlst. .......................................*/
 		strcpy(userlst[0].Name,  ps_name);
 		userpos=userfill;
 		while ( strcmp(userlst[userpos].Name,ps_name) ) userpos--;
-		
+
 		if (userpos ==0 ){	     /* user not found => not active */
 		  if (do_bite) kill(pid, SIGKILL); /* send the "kill" signal */
 		  sprintf(mbuf,"Lost, killed: %-10s %5d : %5d",ps_name,uid,pid);
