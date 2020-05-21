@@ -817,7 +817,9 @@ get_PIDs(char *u_name, char *u_dev) /* find processes of a given user.        */
 	struct stat status;
 
 	FILE  *ps;
-	int i, pid, uid;
+	int i;
+	pid_t pid;
+	uid_t uid;
 
 	if (!(ps = popen(ps_cmd, "r")) ) {
 		bailout("Can't use ps program", 6);
@@ -1137,7 +1139,9 @@ kill_lost_PIDs()
 	struct stat status;
 
 	FILE *ps;
-	int i, pid, uid;
+	int i;
+	pid_t pid;
+	uid_t uid;
 	char mbuf[LINELEN];	   /* message buffer */
 
 	int userpos = 0;	   /* position of user found, 0 => not found */
