@@ -81,3 +81,6 @@ CHANGES(autolog):
 
 	Squash some warnings reported by gcc
 	  (gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0)
+
+	User id range checking adjusted to suit debian and systems where valid
+	user accounts may have a uid >60000.

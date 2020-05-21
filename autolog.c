@@ -1171,8 +1171,8 @@ kill_lost_PIDs()
 			if (debug)
 				printf("%-8s -> %5s %5d %5d\n", ps_name, ps_pid, pid, uid);
 
-			if (500 <= uid && uid <= 60000) {	  /* neither root nor nobody */
-	/*.. Get Position of user in userlst. .......................................*/
+			if (1000 <= uid && uid != 65534) {	  /* neither system accounts nor nobody */
+				/*.. Get Position of user in userlst. .......................................*/
 				strcpy(userlst[0].Name, ps_name);
 				userpos = userfill;
 				while ( strcmp(userlst[userpos].Name, ps_name) )
