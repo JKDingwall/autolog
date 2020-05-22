@@ -1,3 +1,7 @@
+/**
+ * version 0.41: James Dingwall <james.dingwall@zynstra.com>
+ */
+
 /*****************************************************************************/
 /*									     */
 /*   Programm: autolog.c 	C-Programm to log out sleeping users	     */
@@ -96,8 +100,10 @@
 #define     MAXCONF     512 /* maximum lines in config file */
 
 typedef struct {
-	char   Name[20];    /* Name of user.				*/
-	char   Device[20];  /* Outputdevice with the minimum idle-time	*/
+			    /* Name of user.				*/
+	char   Name[UT_NAMESIZE + 1];
+			    /* Output device with the minimum idle-time	*/
+	char   Device[UT_LINESIZE + 1];
 			    /* "." serves as flag that user logged out, */
 			    /*     when chasing lost processes.         */
 	uid_t  UserID;	    /* to check whether user has changed	*/
@@ -209,7 +215,7 @@ main(int argc, char *argv[])
 			fprintf(stderr, "autologout: illegal parameter: %s\n", argv[i]);
 		}
 	} /* for */
-	ps_cmd = "ps aux";
+	ps_cmd = "ps axo user:32,pid,tty";
 
 	time(&pres_time);		  /* get current time for log-file */
 	log_msg("Starting Service");
@@ -296,8 +302,8 @@ check_utmp()
 
 	int userpos = 0;	/* position of user found, 0 => not found */
 
-	sprintf(prname, "/proc/%d", utmpp->ut_pid);   /* append /proc/ to proclist */
-	sprintf(dev, "/dev/%s", utmpp->ut_line);  /* append /dev/ to base name */
+	snprintf(prname, sizeof(prname), "/proc/%d", utmpp->ut_pid);   /* append /proc/ to proclist */
+	snprintf(dev, sizeof(dev), "/dev/%s", utmpp->ut_line);  /* append /dev/ to base name */
 	msg = "";
 
 	/*.. Get information about the current process. .............................*/
@@ -339,13 +345,15 @@ check_utmp()
 		       utmpp->ut_type,
 		       ctime(&utmpp->ut_time));
 
-	strcpy(userlst[0].Name, name);
-	strcpy(userlst[0].Device, utmpp->ut_line);
+	strncpy(userlst[0].Name, name, UT_NAMESIZE);
+	userlst[0].Name[UT_NAMESIZE] = '\0';
+	strncpy(userlst[0].Device, utmpp->ut_line, UT_LINESIZE);
+	userlst[0].Device[UT_LINESIZE] = '\0';
 	userlst[0].IdleTime = idle;
 
 	/*.. Get Position of user in userlst. .......................................*/
 	userpos = userfill;
-	while ( strcmp(userlst[userpos].Name, name) )
+	while ( strncmp(userlst[userpos].Name, name, UT_NAMESIZE) )
 		userpos--;
 
 	/*.. if not found -> add user to userlst. ...................................*/
@@ -355,8 +363,10 @@ check_utmp()
 			usermax = 2 * usermax;
 			userlst = (userdata *)realloc(userlst, sizeof(userdata) * (1 + usermax));
 		}
-		strcpy(userlst[userfill].Name, name);
-		strcpy(userlst[userfill].Device, utmpp->ut_line);
+		strncpy(userlst[userfill].Name, name, UT_NAMESIZE);
+		userlst[userfill].Name[UT_NAMESIZE] = '\0';
+		strncpy(userlst[userfill].Device, utmpp->ut_line, UT_LINESIZE);
+		userlst[userfill].Device[UT_LINESIZE] = '\0';
 		userlst[userfill].IdleTime = idle;
 		userlst[userfill].UserID = status.st_uid;
 		userlst[userfill].SessStrt = utmpp->ut_time;
@@ -364,7 +374,8 @@ check_utmp()
 	} else {
 		if (userlst[userpos].IdleTime > idle) {  /* less idle-time found. ....*/
 			userlst[userpos].IdleTime = idle;
-			strcpy(userlst[userpos].Device,utmpp->ut_line);
+			strncpy(userlst[userpos].Device, utmpp->ut_line, UT_LINESIZE);
+			userlst[userpos].Device[UT_LINESIZE] = '\0';
 		}
 	    	if (userlst[userpos].SessStrt > utmpp->ut_time) {  /* earlier start. */
 			userlst[userpos].SessStrt = utmpp->ut_time;
@@ -621,8 +632,8 @@ check_idle(userdata *akt_usr)
 	conf_el *ce;
 	int i;
 
-	strcpy(name, akt_usr->Name);
-	strcpy(dev, akt_usr->Device);
+	strncpy(name, akt_usr->Name, UT_NAMESIZE);
+	strncpy(dev, akt_usr->Device, UT_LINESIZE);
 	idle = akt_usr->IdleTime;
 	stime = pres_time - akt_usr->SessStrt;
 
@@ -634,7 +645,7 @@ check_idle(userdata *akt_usr)
 	if(dev[0] == ':')   /* ignore xdm */
 		return 0;
 
-	sprintf(ddev, "/dev/%s", dev);	  /* append /dev/ to base name */
+	snprintf(ddev, sizeof(ddev), "/dev/%s", dev);	  /* append /dev/ to base name */
 
 	/*.. If user has logged out, check his Session time and so. .................*/
 
@@ -650,7 +661,7 @@ check_idle(userdata *akt_usr)
 	if (!(passwd_entry = getpwnam(name)))         /* If can't find by name */
 		passwd_entry = getpwuid(akt_usr->UserID); /* try by uid */
 	if (passwd_entry) {
-		strcpy(name, passwd_entry->pw_name);
+		strncpy(name, passwd_entry->pw_name, STRLEN);
 		if (group_entry = getgrgid(passwd_entry->pw_gid))
 			gn = group_entry->gr_name;
 		else if (debug)
@@ -692,7 +703,7 @@ check_idle(userdata *akt_usr)
 			lower_sleep(ChckSleep);		/* user might come back      */
 		}
 
-		strcpy(akt_usr->Device, ".");		/* "Flag": user logged out.  */
+		strncpy(akt_usr->Device, ".", UT_LINESIZE); /* "Flag": user logged out.  */
 
 		if (debug) {
 			if (stat(ddev, &status)) {
@@ -832,9 +843,10 @@ get_PIDs(char *u_name, char *u_dev) /* find processes of a given user.        */
 		ps_name = strtok(iline, delims);   /* manual: Never use this function. */
 		ps_pid = strtok(0, delims);
 		pid = atoi(ps_pid);
-		for(i = 0;i < 5; i++)
-			ps_dev = strtok(0,delims);
-		sprintf(prname, "/proc/%d", pid);   /* append /proc/ to proclist */
+// TODO: this is not flexible about the terminal position in the ps output
+//		for(i = 0; i < 5; i++)
+			ps_dev = strtok(0, delims);
+		snprintf(prname, sizeof(prname), "/proc/%d", pid);   /* append /proc/ to proclist */
 		if (stat(prname, &status))
 			printf("Dead process:    \n");
 		uid = status.st_uid;
@@ -948,7 +960,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 		}
 
 		if (ce->clear) {
-			sprintf(mbuf, "clear >%s", dev);
+			snprintf(mbuf, sizeof(mbuf), "clear >%s", dev);
 			system (mbuf);
 		}
 		fprintf(fp, "\n\n\r"); /* \r is sometimes needed...*/
@@ -971,7 +983,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 			return 0;
 		}
 		if (ce->clear) {
-			sprintf(mbuf, "clear >%s", dev);
+			snprintf(mbuf, sizeof(mbuf), "clear >%s", dev);
 			system (mbuf);
 		}
 		if (ce->hard) {
@@ -996,7 +1008,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 			return 0;
 		}
 		if (ce->clear) {
-			sprintf(mbuf,"clear >%s", dev);
+			snprintf(mbuf, sizeof(mbuf), "clear >%s", dev);
 			system(mbuf);
 		}
 		if (ce->hard) {
@@ -1027,7 +1039,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 		}
 		fclose(fp);
 		if (ce->mail) {
-			sprintf(mbuf, "/usr/bin/mail -s \"++WARNING - LOG-OFF ++\" %s", name);
+			snprintf(mbuf, sizeof(mbuf), "/usr/bin/mail -s \"++WARNING - LOG-OFF ++\" %s", name);
 			/* open pipe to mail program for writing */
 			if (!(mprog = popen(mbuf, "w")) ) {
 				bailout("Can't use /usr/bin/mail program", 6);
@@ -1051,7 +1063,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 	if (flag == LOGOFF) {
 	        hint = "** LOGOFF **";
 	        if (ce->mail) {
-			sprintf(mbuf, "/usr/bin/mail -s \"Logged off, you were idle\" %s", name);
+			snprintf(mbuf, sizeof(mbuf), "/usr/bin/mail -s \"Logged off, you were idle\" %s", name);
 			/* open pipe to mail program for writing */
 			if (!(mprog = popen(mbuf, "w")) ) {
 				bailout("Can't use /usr/bin/mail program", 6);
@@ -1067,7 +1079,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 	if (flag == NOLOGOFF) {
 		hint = "** LOGOFF FAILED **";
 		if (ce->mail) {
-			sprintf(mbuf, "/usr/bin/mail -s \"Couldn't log out [%s] \" root", name);
+			snprintf(mbuf, sizeof(mbuf), "/usr/bin/mail -s \"Couldn't log out [%s] \" root", name);
 			if ((mprog = popen(mbuf, "w")) == (FILE *)NULL) {
 				bailout("Can't use /usr/bin/mail program", 7);
 				return 0;
@@ -1080,7 +1092,7 @@ mesg(int flag, char *name, char *dev, int stime, int idle, conf_el *ce)
 	}
 	if (ce->log) {				/* Generate logfile message */
 		char msg[100];
-		sprintf(msg, "%-20s %-8s %-5s idle:%3d sess:%3d",
+		snprintf(msg, sizeof(msg), "%-20s %-8s %-5s idle:%3d sess:%3d",
 			hint, name, dev + 5, idle, stime);
 		log_msg(msg);
 	}
@@ -1100,7 +1112,7 @@ log_msg(char *message)
 		if (log == NULL)
 			return 1;			/* fopen failed.     */
 
-		sprintf(str_time, "%s", ctime(&pres_time) + 3);
+		snprintf(str_time, sizeof(str_time), "%s", ctime(&pres_time) + 3);
 		str_time[strlen(str_time) - 1] = 0;
 
 		fprintf(log, "%s - %s\n", str_time, message);
@@ -1114,7 +1126,8 @@ static int
 bailout(char *message, int status)
 {
 	char msg[100];                          /* Try to log the message.   */
-	sprintf(msg, "** ERROR ** %s", message);
+
+	snprintf(msg, sizeof(msg), "** ERROR ** %s", message);
 	log_msg(msg);
 }
 
@@ -1159,12 +1172,12 @@ kill_lost_PIDs()
 		ps_pid = strtok(0, delims);
 		pid = atoi(ps_pid);
 
-		sprintf(prname, "/proc/%d", pid);   /* append /proc/ to proclist */
+		snprintf(prname, sizeof(prname), "/proc/%d", pid);   /* append /proc/ to proclist */
 		if (stat(prname, &status)) {
 			userpos = -1;			  /* => process will be killed. */
 			if (do_bite)
 				kill(pid, SIGKILL); /* send the "kill" signal */
-			sprintf(mbuf, "Dead , killed: %-10s %5d : %5d", ps_name, uid, pid);
+			snprintf(mbuf, sizeof(mbuf), "Dead , killed: %-10s %5d : %5d", ps_name, uid, pid);
 			log_msg(mbuf);
 		} else {
 			uid = status.st_uid;
@@ -1173,20 +1186,21 @@ kill_lost_PIDs()
 
 			if (1000 <= uid && uid != 65534) {	  /* neither system accounts nor nobody */
 				/*.. Get Position of user in userlst. .......................................*/
-				strcpy(userlst[0].Name, ps_name);
+				strncpy(userlst[0].Name, ps_name, UT_NAMESIZE);
+				userlst[0].Name[UT_NAMESIZE] = '\0';
 				userpos = userfill;
-				while ( strcmp(userlst[userpos].Name, ps_name) )
+				while ( strncmp(userlst[userpos].Name, ps_name, UT_NAMESIZE) )
 					userpos--;
 
 				if (userpos == 0 ) {	     /* user not found => not active */
 					if (do_bite)
 						kill(pid, SIGKILL); /* send the "kill" signal */
-					 sprintf(mbuf, "Lost, killed: %-10s %5d : %5d", ps_name, uid, pid);
+					 snprintf(mbuf, sizeof(mbuf), "Lost, killed: %-10s %5d : %5d", ps_name, uid, pid);
 					 log_msg(mbuf);
 				} else if(strlen(userlst[userpos].Device) == 1) { /* "." */
 					if (do_bite)
 						kill(pid, SIGKILL); /* send the "kill" signal */
-					sprintf(mbuf, "Left, killed: %-10s %5d : %5d", ps_name, uid, pid);
+					snprintf(mbuf, sizeof(mbuf), "Left, killed: %-10s %5d : %5d", ps_name, uid, pid);
 					log_msg(mbuf);
 				}
 			}

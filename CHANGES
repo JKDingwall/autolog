@@ -84,3 +84,9 @@ CHANGES(autolog):
 
 	User id range checking adjusted to suit debian and systems where valid
 	user accounts may have a uid >60000.
+
+	Improvements in string length handling:
+	- Use utmp #defines UT_NAMESIZE and UT_LINESIZE for string lengths
+	  in userdata struct
+	- Use 'n' versions of strcpy / strcmp / sprintf
+	- Use a default ps command which prints usernames to 32 chars

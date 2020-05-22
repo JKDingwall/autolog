@@ -1,3 +1,17 @@
+Autolog 0.41
+
+The source was investigated after examining issues which occurred when
+accounts with long usernames (nss_winbind DOMAIN\user) would cause
+autolog to segfault.  This revealed two key issues:
+
+- userdata string length < UT_NAMESIZE
+- ps output with truncated usernames did not match pids
+
+This revision updates string handling functions to use suitable 'n'
+variants, makes user and terminal variables use UT_NAMESIZE and
+UT_LINESIZE, changes the default ps command to output usernames to
+32 characters to match UT_NAMESIZE;
+
 Autolog 0.40
 
 Autolog is a new version of autolog by Kyle Bateman (kyle@actarg.com),
