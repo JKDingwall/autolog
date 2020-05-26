@@ -61,4 +61,32 @@ CHANGES(autolog):
 	
 	Only lost processes with uid (user-id) between 500 and 60000
 	will be killed, others usually belong to system processes.
-	
+
+- 0.41: May 2020       James Dingwall <james.dingwall@zynstra.com>
+
+	Merge patches carried by debian which are not related to
+	packaging:
+	- 01_Makefile.patch
+	- 02_autolog.patch
+	- 04_check_ps_output.patch
+	- 05_Fix-spelling-errors.patch
+	- 06_adjust_makefile.patch
+	- 07_clang-ftbfs.patch
+	- 08_trailing_whitespace.patch
+
+	Reformat the autolog.c source to for a more consistent style:
+	- consistent tabbed indent instead of whitespace mix
+	- insert spaces around operators for better readability
+	- consistent brace usage for if/then/else etc
+
+	Squash some warnings reported by gcc
+	  (gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0)
+
+	User id range checking adjusted to suit debian and systems where valid
+	user accounts may have a uid >60000.
+
+	Improvements in string length handling:
+	- Use utmp #defines UT_NAMESIZE and UT_LINESIZE for string lengths
+	  in userdata struct
+	- Use 'n' versions of strcpy / strcmp / sprintf
+	- Use a default ps command which prints usernames to 32 chars

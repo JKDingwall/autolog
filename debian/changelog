@@ -1,5 +1,6 @@
-autolog (0.40+debian-4) UNRELEASED; urgency=medium
+autolog (0.41+debian-1) UNRELEASED; urgency=medium
 
+  * New upstream release: 0.41
   * d/control
     - Bump debhelper compatibility level to 12.
     - Switch Build-Depends from debhelper to debhelper-compat.
