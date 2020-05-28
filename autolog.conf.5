@@ -1,0 +1,113 @@
+.TH autolog.conf 1L "Configuration Files" "Linux" \" -*- nroff -*-
+.SH NAME
+autolog.conf \- Configuration file for the autolog command
+.SH DESCRIPTION
+The configuration file consists of multiple lines, each of which describes
+a class of processes subject (or not subject) to a certain auto logout
+procedure.  A line consists of any number of switches.  Value switches are
+of the form: "name=value".  Boolean switches are of the form: "name" or
+"noname".
+.PP
+Using these switches, you can define a username, a group, and a tty line.
+These descriptions can contain wildcard characters (regular expressions).
+You can also define an idle time, a grace period and a few other options.
+When reading the configuration file, the program creates a record for each
+configuration line.  A value is assigned to each variable in the record
+regardless of whether or not you specify one explicitly.  Values for 
+missing variables are provided by defaults which are compiled in and can 
+be modified from the command line.
+.PP
+If no entries are found matching a given process, that process will be
+spared from an untimely demise.  Therefore, it is a good idea to always 
+have a "cleanup" line at the end of the configuration file to catch 
+anything that might have been missed by the more explicit definitions.  
+Since the default name, group, and line are all ".+", a simple line like:
+
+        idle=30
+
+will do.  Actually, any one switch can be specified on the line and all the
+others will get the default values.
+.PP
+If no configuration file is found, the program will create a single
+entry which has all values set from the defaults.  This entry will match
+any process on any port (name=.+ line=.+ group=.+).  Therefore, the default
+action is to kill all processes.
+.SH ENTRYS
+.TP
+.B name=
+A regular expression specifying which username(s) to match.
+.TP
+.B group=
+A regular expression specifying which group(s) to match.
+.TP
+.B line=
+A regular expression specifying which tty line(s) to match.
+Omit the "/dev/" part of the special name.
+.TP
+.B idle=
+An integer specifying the number of --minutes-- of idle
+(or connect) time to allow before beginning automatic logoff.
+An idle time of 0 exempts the process from automatic logoff.
+.TP
+.B grace=
+An integer specifying the number of --seconds-- from the initial
+warning to killing the process.
+.TP
+.B ban=
+An integer specifying the number of --minutes-- from killing the process
+to the moment, the user may login again. (after exceeding his session).
+
+.TP
+.B hard
+A boolean value indicating total connect time will be 
+considered rather than idle time.
+.TP
+.B mail
+A boolean value indicating that mail will be sent to the
+user explaining that he was killed.
+.TP
+.B clear
+A boolean value indicating that the screen will be cleared
+before a warning message is sent.
+.TP
+.B warn
+A boolean value indicating that a warning message will be
+sent at the beginning of the "grace" period.
+.TP
+.B log
+A boolean value indicating that activities will be logged
+to the logfile (if it exists).
+
+.PP
+There is an other group of entries, which allows to set some
+general options. Each of them takes a whole line.
+Don't mixe them with the other entries form before.
+.SH further ENTRYS
+.TP
+.B nolostkill
+A boolean value indicating whether lost processes should be killed.
+If there is a process with uid between 500 and 60000 and the owner
+is not logged in, it is assumed as lost and will be killed.
+
+.TP
+.B ps=command
+on some strange or old systems the ps-command has different parameters.
+This makes it possible to set a completly different command. It is only
+important, that this command delivers one heading line and then lines
+with usernames and process-ids (pid). e.g.:  ps=ps aux
+
+.SH EXAMPLE
+        name=root line=tty[1-7] idle=0
+        name=guest idle=5 grace=60 nomail hard warn
+        group=lynx-.* idle=10 grace=60 clear
+        idle=60 grace=30
+
+.SH AUTHOR
+Kyle Bateman <kyle@actarg.com> (autolog 0.35),
+.PD 0
+.TP
+Carsten Juerges <juerges@cip-bau.uni-hannover.de>
+.TP
+                                  (autolog 0.40)
+.PD
+.zZ
