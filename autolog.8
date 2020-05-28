@@ -1,4 +1,4 @@
-.TH AUTOLOG 1L "Administrative Utilities" "Linux" \" -*- nroff -*-
+.TH AUTOLOG 8 "Administrative Utilities" "Linux" \" -*- nroff -*-
 .SH NAME
 autolog \- Log out idle users
 .SH SYNOPSIS
@@ -15,7 +15,7 @@ logout.
 
 .SH CALL
 .TP
-.B /sbin/init.d/autolog start
+.B /etc/init.d/autolog start
 .PD 0
 .TP
 or
@@ -41,7 +41,7 @@ out verbose messages about what it is doing.
 .TP
 .B -n
 (nokill) Use this to prevent autolog from actually "killing"
-anyone. Use -d and -n together when setting up a new
+anyone. Use \-d and \-n together when setting up a new
 configuration file.
 ( This will not affect killing of lost processes. )
 .TP
@@ -49,7 +49,7 @@ configuration file.
 (ordinary) Use this to run this program as ordinary
 program, not as daemon. Program will end, when its
 job is done. In this case, some data is kept in
-"/tmp/autolog.data". This is read, when the program
+"/var/lib/autolog/autolog.data". This is read, when the program
 is called again.
 .TP
 .B -f config_file_name
@@ -85,8 +85,9 @@ present.
 Kyle Bateman <kyle@actarg.com> (autolog 0.35),
 .PD 0
 .TP
-Carsten Juerges <juerges@cip-bau.uni-hannover.de>
+James Dingwall <james.dingwall@zynstra.com>
 .TP
-                                  (autolog 0.40)
+                                  (autolog 0.41)
 .PD
-.zZ
+.PP
+This manual page was modified for \fBDebian\fP by Paul Telford <pxt@debian.org>
