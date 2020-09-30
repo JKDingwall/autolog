@@ -1,5 +1,5 @@
 Source: autolog
-Build-Depends: debhelper-compat (= 12)
+Build-Depends: debhelper-compat (= 13)
 Section: admin
 Priority: optional
 Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
