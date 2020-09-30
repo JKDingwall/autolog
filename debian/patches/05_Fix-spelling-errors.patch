@@ -1,5 +1,5 @@
 Description: Fix spelling errors in several files
-Author: Marcos Fouces <marcos.fouces@gmail.com>
+Author: Marcos Fouces <marcos@debian.org>
 --- a/README
 +++ b/README
 @@ -63,14 +63,14 @@

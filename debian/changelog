@@ -1,9 +1,9 @@
 autolog (0.40+debian-4) UNRELEASED; urgency=medium
 
+  [ Marcos Fouces ]
   * d/control
     - Bump debhelper compatibility level to 12.
     - Switch Build-Depends from debhelper to debhelper-compat.
-    - Bump to Standards-Version 4.3.0 (no changes required).
     - Add Pre-Depends: ${misc:Pre-Depends} to handle
       --skip-systemd-native invoke-rc.d flag properly.
     - Remove unnecessary greater-than versioned dependencies.
@@ -14,7 +14,15 @@ autolog (0.40+debian-4) UNRELEASED; urgency=medium
   * d/watch
     - Use secure URI.
 
- -- Marcos Fouces <marcos.fouces@gmail.com>  Wed, 08 May 2019 22:14:09 +0200
+  [ Samuel Henrique ]
+  * Add salsa-ci.yml
+  * Configure git-buildpackage for Debian
+
+  [ Debian Janitor ]
+  * Use secure URI in Homepage field.
+  * Update standards version to 4.5.0, no changes needed.
+
+ -- Marcos Fouces <marcos@debian.org>  Wed, 30 Sep 2020 15:56:51 +0200
 
 autolog (0.40+debian-3) unstable; urgency=medium
 
