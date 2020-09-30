@@ -16,9 +16,9 @@ autolog (0.40+debian-4) UNRELEASED; urgency=medium
 
   [ Samuel Henrique ]
   * Add salsa-ci.yml
-  * Configure git-buildpackage for Debian
+  * Configure git-buildpackage for Debian.
 
-  [ Debian Janitor ]
+  [ Deb Janitor ]
   * Use secure URI in Homepage field.
   * Update standards version to 4.5.0, no changes needed.
 
