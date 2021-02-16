@@ -90,3 +90,8 @@ CHANGES(autolog):
 	  in userdata struct
 	- Use 'n' versions of strcpy / strcmp / sprintf
 	- Use a default ps command which prints usernames to 32 chars
+
+- 0.42: February 2021  James Dingwall <james.dingwall@zynstra.com>
+
+	Nominate myself as the maintainer of autolog.  Zynstra uses autolog
+	and have an interest in seeing the package maintained.
