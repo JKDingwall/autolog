@@ -99,3 +99,4 @@ CHANGES(autolog):
 - 0.42.1: *UNRELEASED* James Dingwall <james.dingwall@ncrvoyix.com>
 
 	- Update my contact email address
+	- Add repository LICENSE file, SPDX header; remove inline GPL text
