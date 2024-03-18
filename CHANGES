@@ -62,7 +62,7 @@ CHANGES(autolog):
 	Only lost processes with uid (user-id) between 500 and 60000
 	will be killed, others usually belong to system processes.
 
-- 0.41: May 2020       James Dingwall <james.dingwall@zynstra.com>
+- 0.41: May 2020       James Dingwall <james.dingwall@ncrvoyix.com>
 
 	Merge patches carried by debian which are not related to
 	packaging:
@@ -91,7 +91,11 @@ CHANGES(autolog):
 	- Use 'n' versions of strcpy / strcmp / sprintf
 	- Use a default ps command which prints usernames to 32 chars
 
-- 0.42: February 2021  James Dingwall <james.dingwall@zynstra.com>
+- 0.42: February 2021  James Dingwall <james.dingwall@ncrvoyix.com>
 
 	Nominate myself as the maintainer of autolog.  Zynstra uses autolog
 	and have an interest in seeing the package maintained.
+
+- 0.42.1: *UNRELEASED* James Dingwall <james.dingwall@ncrvoyix.com>
+
+	- Update my contact email address

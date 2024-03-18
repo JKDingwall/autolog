@@ -1,5 +1,5 @@
 /**
- * version 0.41: James Dingwall <james.dingwall@zynstra.com>
+ * version 0.42.1: James Dingwall <james.dingwall@ncrvoyix.com>
  */
 
 /*****************************************************************************/
