@@ -3,6 +3,8 @@
 # The -g flag is to include debugging information.  It gets
 # stripped back out in the install command anyway.
 CC      ?= gcc
+CFLAGS  += -Werror=implicit-function-declaration
+CFLAGS  += -D_REGEX_RE_COMP=1
 #CFLAGS += -g
 MANDIR  = $(DESTDIR)/usr/share/man
 BINDIR  = $(DESTDIR)/usr/sbin/

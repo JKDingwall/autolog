@@ -100,3 +100,5 @@ CHANGES(autolog):
 
 	- Update my contact email address
 	- Add repository LICENSE file, SPDX header; remove inline GPL text
+	- Resolve https://github.com/JKDingwall/autolog/issues/2,
+	  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1066269
