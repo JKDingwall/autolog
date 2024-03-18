@@ -96,7 +96,7 @@ CHANGES(autolog):
 	Nominate myself as the maintainer of autolog.  Zynstra uses autolog
 	and have an interest in seeing the package maintained.
 
-- 0.42.1: *UNRELEASED* James Dingwall <james.dingwall@ncrvoyix.com>
+- 0.42.1: March 2024 James Dingwall <james.dingwall@ncrvoyix.com>
 
 	- Update my contact email address
 	- Add repository LICENSE file, SPDX header; remove inline GPL text
