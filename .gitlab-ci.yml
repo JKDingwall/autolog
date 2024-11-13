@@ -1,0 +1,2 @@
+include:
+  - .gitlab/build-ubuntu-22.04.yml
