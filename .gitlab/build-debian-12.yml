@@ -1,0 +1,15 @@
+build-debian-12:
+  image:
+    name: debian:12
+  tags:
+    - linux
+  script:
+    - |-
+        #
+        # Add packages
+        apt-get update
+        apt-get -y install \
+            build-essential
+        #
+        # Build
+        make
