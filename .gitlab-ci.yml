@@ -1,2 +1,4 @@
 include:
+  # Ubuntu
   - .gitlab/build-ubuntu-22.04.yml
+  - .gitlab/build-ubuntu-24.04.yml
