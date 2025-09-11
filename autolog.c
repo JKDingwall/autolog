@@ -146,7 +146,6 @@ int  	  ids_fill;
 int	  ids_max;
 int	  *ids_lst;
 
-time_t    time();	 /* they are used so often      */
 time_t    pres_time;     /* current time.		*/
 time_t    chck_pid = 0;	 /* don't check pids before ... */
 int       lostkill = 1;	 /* 1 => kill lost processes.   */
