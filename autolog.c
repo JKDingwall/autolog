@@ -285,7 +285,7 @@ check_utmp()
 	char tmp_str[80];
 
 	struct stat status;
-	time_t idle, atime;
+	time_t idle, atime, tmp_time;
 
 	int userpos = 0;	/* position of user found, 0 => not found */
 
@@ -299,12 +299,14 @@ check_utmp()
 	if (utmpp->ut_type != USER_PROCESS)
 		msg = "Non-user process:";
 	if (strlen(msg)) {
-		if (listall)
+		if (listall) {
+			tmp_time = (time_t)utmpp->ut_time;
 			printf("%s N:%-8s P:%5d Login:%s",
 			       msg,
 			       utmpp->ut_user,
 			       utmpp->ut_pid,
-			       ctime(&utmpp->ut_time));
+			       ctime(&tmp_time));
+		}
 		return 0;
 	}
 	if (dev[5] != ':' && stat(dev, &status)) {
@@ -315,22 +317,24 @@ check_utmp()
 	}
 
 	/*.. Find out everything about current time, sleep time and session time. ...*/
-	if (utmpp->ut_time > status.st_atime)	   /* get last access time   */
-		atime = utmpp->ut_time;		   /* proc - starttime 	     */
+	if (utmpp->ut_time > status.st_atime)		   /* get last access time   */
+		atime = utmpp->ut_time;			   /* proc - starttime 	     */
 	else
-		atime = status.st_atime;	   /* proc - accesstime      */
-	idle = (pres_time - atime) / 60;	   /* total idle minutes     */
+		atime = status.st_atime;		   /* proc - accesstime      */
+	idle = (pres_time - atime) / 60;		   /* total idle minutes     */
 
 	/*.. Find out username and groupname of this login. .........................*/
 	strncpy(name, utmpp->ut_user, UT_NAMESIZE); /* get user name         */
 	name[UT_NAMESIZE] = '\0';         /* null terminate user name string */
 
-	if (listall)
+	if (listall) {
+		tmp_time = (time_t)utmpp->ut_time;
 		printf("Checking: %-11s on %-12s I:%4ld  T:%d Login: %s",
 		       name,dev,
 		       idle,
 		       utmpp->ut_type,
-		       ctime(&utmpp->ut_time));
+		       ctime(&tmp_time));
+	}
 
 	strncpy(userlst[0].Name, name, UT_NAMESIZE);
 	userlst[0].Name[UT_NAMESIZE] = '\0';
@@ -359,12 +363,12 @@ check_utmp()
 		userlst[userfill].SessStrt = utmpp->ut_time;
 		userlst[userfill].WarnEnds = 0;
 	} else {
-		if (userlst[userpos].IdleTime > idle) {  /* less idle-time found. ....*/
+		if (userlst[userpos].IdleTime > idle) {	/* less idle-time found. ....*/
 			userlst[userpos].IdleTime = idle;
 			strncpy(userlst[userpos].Device, utmpp->ut_line, UT_LINESIZE);
 			userlst[userpos].Device[UT_LINESIZE] = '\0';
 		}
-	    	if (userlst[userpos].SessStrt > utmpp->ut_time) {  /* earlier start. */
+		if (userlst[userpos].SessStrt > utmpp->ut_time) {  /* earlier start. */
 			userlst[userpos].SessStrt = utmpp->ut_time;
 		}
 	}
