@@ -1,6 +1,6 @@
 /**
  * SPDX-License-Identifier: GPL-2.0-or-later
- * version 0.42.2pre: James Dingwall <james.dingwall@ncrvoyix.com>
+ * version 0.42.2: James Dingwall <james.dingwall@ncrvoyix.com>
  */
 
 /*****************************************************************************/

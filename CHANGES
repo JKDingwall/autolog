@@ -1,8 +1,16 @@
 CHANGES(autolog):
 ================
-- 0.42.2pre: *UNRELEASED*   James Dingwall <james.dingwall@ncrvoyix.com>
+- 0.42.2: September 2025   James Dingwall <james.dingwall@ncrvoyix.com>
 
 	- docs: reorder CHANGES file
+	- Add gitlab CI pipelines to build autolog for:
+	  - Ubuntu 22.04, 24.04
+	  - Debian 11, 12, 13, 14
+	- Fix 'warning: passing argument 1 of 'ctime' from incompatible pointer type'
+	  which is now an error on Debian 13.
+        - Resolve https://github.com/JKDingwall/autolog/pull/4
+          https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1096349
+          gcc-15 'error: conflicting types for 'time'
 
 - 0.42.1: March 2024   James Dingwall <james.dingwall@ncrvoyix.com>
 
