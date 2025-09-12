@@ -1,0 +1,15 @@
+build-debian-13:
+  image:
+    name: debian:13
+  tags:
+    - linux
+  script:
+    - |-
+        #
+        # Add packages
+        apt-get update
+        apt-get -y install \
+            build-essential
+        #
+        # Build
+        make

@@ -2,6 +2,7 @@ include:
   # Debian
   - .gitlab/build-debian-11.yml
   - .gitlab/build-debian-12.yml
+  - .gitlab/build-debian-13.yml
   # Ubuntu
   - .gitlab/build-ubuntu-22.04.yml
   - .gitlab/build-ubuntu-24.04.yml
